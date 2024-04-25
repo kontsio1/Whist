@@ -44,3 +44,36 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Steps to recreate
+
+*Frontend*: react
+*Server/Backend*: node.js
+
+Install: 
+- dotenv (dev dependency)
+- nodemon (dev dependency)
+- pg (dev dependency) -> pSQL db framework
+- express -> for api
+
+Setup services:
+- configure db in [ElephantSQL](https://www.elephantsql.com/)
+- host api with [Render](https://render.com/)
+
+Next steps:
+- seed db by using suitable Object Relational Mapping (ORM) Framework ex:
+  - [Node-postgres](https://node-postgres.com/features/connecting#environment-variables) 
+  - [Prisma](https://www.prisma.io/docs/orm)
+- create api
+
+Links to keep in mind:
+
+- Dashboard: https://dashboard.render.com/web/srv-cm8btten7f5s73dciusg/deploys/dep-cm8c2h0cmk4c7391cscg
+- Api: https://whist-game-web-service.onrender.com/
+- DB: [here](postgres://lsahubkw:DocupetHVC2NcF_LGA5CXJBIB-fwtqFN@mel.db.elephantsql.com/lsahubkw)
+
+### To Do
+- remove toast on adding player
+- add toast on request success
+- add back button
+- add rules/form validation for starting game with no users
