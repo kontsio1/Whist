@@ -8,6 +8,6 @@ const data = {
     rounds: roundsData
 }
 
-seed(data).then(()=>{
+seed(6).then(()=>{
     return db.end()
 })

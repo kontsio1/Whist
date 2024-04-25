@@ -1,26 +1,36 @@
-import {Badge, Button, Table, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, useDisclosure} from "@chakra-ui/react";
+import {Badge, Table, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, useDisclosure} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {callsGetRequest, callsPostRequest, user} from "../Constants";
 import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
 
+export interface cellCoords {
+    roundNo: number,
+    player: string,
+}
 export const GameScreen = (type: any) => {
     const [playerNames, setPlayerNames] = useState<user[]>([])
     const [playerCalls, setPlayerCalls] = useState<callsGetRequest[]>()
+    const [selectedCell, setSelectedCell] = useState<cellCoords|undefined>()
     // const [playerScores, setPlayerScores] = useState()
-    const { isOpen, onOpen, onClose, getDisclosureProps } = useDisclosure()
-        
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    
     useEffect(() => {
         getPlayersNames().then((users: user[])=>{
             setPlayerNames(users)
         })
+        updateUsersAndScores()
     }, []);
 
     useEffect(() => {
+        
+    }, []); //change here instead of playerCalls
+    
+    const updateUsersAndScores = async()=> {
         getPlayersCalls().then((calls: callsGetRequest[] )=>{
             setPlayerCalls(calls)
         })
-    }, [playerCalls]);
+    }
     const getPlayersCalls = async (): Promise<callsGetRequest[]> => {
         try {
             const resp = await axios.get("/calls");
@@ -39,18 +49,28 @@ export const GameScreen = (type: any) => {
             throw error
         }
     }
-    const addCall = async (value: number) => {
-        console.log(value, "<<VALUE")
-        const newCall : callsPostRequest = {roundNo: 1, player1: value}
-        try {
-            const resp = axios.post("/call", newCall)
-            return resp
-        } catch (error) {
-            console.log(error)
-            throw error
+    const addCall = async (value: number, cell: cellCoords | undefined) => {
+        console.log(value,cell, "<<VALUE")
+        if(cell){
+            const newCall : callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
+            try {
+                await axios.post("/call", newCall)
+                await updateUsersAndScores()
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        } else {
+            throw ReferenceError
         }
     }
     
+    const onClickCell = (cell: cellCoords) => {
+        setSelectedCell(cell)
+        onOpen()
+    }
+    
+    // @ts-ignore
     return (
         <div>
             <header>Game screen</header>
@@ -74,10 +94,14 @@ export const GameScreen = (type: any) => {
                         {playerCalls?.map((roundCalls, index)=>(
                             <Tr>
                                 {
-                                    Object.keys(roundCalls).map((player, index)=>(
+                                    Object.keys(roundCalls).map((player)=>(
                                         player === "roundno" ? <Td isNumeric>{roundCalls.roundno}</Td> :
-                                        <Td isNumeric id={index.toString()}>
-                                            <div onClick={onOpen} style={{cursor: "pointer"}}>
+                                        <Td isNumeric bg={selectedCell &&
+                                        selectedCell.roundNo === index+1 &&
+                                        selectedCell.player === player
+                                            ? 'purple.200'
+                                            : undefined}>
+                                            <div onClick={()=> onClickCell({player,roundNo:index+1})} style={{cursor: "pointer"}}>
                                                 <Badge colorScheme='purple' borderRadius={10} padding={1}>{roundCalls[player as keyof callsGetRequest]}</Badge>
                                             </div>
                                         </Td>
@@ -85,6 +109,22 @@ export const GameScreen = (type: any) => {
                                 }
                             </Tr>
                         ))}
+                        <Tr>
+                                <Td isNumeric>{playerCalls? playerCalls.length+1 : 1}</Td>
+                                {
+                                    playerNames?.map((user, index)=>(
+                                        <Td isNumeric bg={selectedCell &&
+                                            selectedCell.roundNo === (playerCalls? playerCalls.length+1 : 1) &&
+                                            selectedCell.player === `player${index+1}`
+                                            ? 'purple.200'
+                                            : undefined}>
+                                        <div onClick={()=> onClickCell({player: `player${index+1}`,roundNo:(playerCalls? playerCalls.length+1 : 1)})} style={{cursor: "pointer"}}>
+                                            <Badge colorScheme='purple' borderRadius={10} padding={1}>New round</Badge>
+                                        </div>
+                                    </Td>
+                                    ))
+                                }
+                        </Tr>
                     </Tbody>
                     <Tfoot>
                         <Tr>
@@ -97,7 +137,7 @@ export const GameScreen = (type: any) => {
                     </Tfoot>
                 </Table>
             </TableContainer>
-            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall}/>
+            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
         </div>
     )
 }

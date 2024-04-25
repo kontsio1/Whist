@@ -2,6 +2,7 @@ const db = require('./db/connection');
 const {query} = require("express");
 const {SELECT} = require("pg-format/lib/reserved");
 const format = require('pg-format');
+const seed = require("./db/seed");
 
 async function getUsersRepo() {
         const users = await db.query("SELECT * FROM users")
@@ -30,13 +31,17 @@ async function postRoundCallsRepo({player1, player2, player3, player4, player5, 
 async  function postRoundCallRepo(playerObj) {
         const columns = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
         const playerNumber = Object.keys(playerObj)[1]
-        console.log(playerNumber)
+        console.log(playerObj)
         
         if (columns.includes(playerNumber)) {
                 const callValue = playerObj[playerNumber]
                 const roundNo = playerObj.roundNo
                 const lastPlayedRound = await getLastRound()
-                if(roundNo <= lastPlayedRound.calls) {
+                if (lastPlayedRound===undefined) {
+                        console.log("first round", playerNumber, callValue, roundNo)
+                        await db.query(`INSERT INTO roundsCalls (${playerNumber}) VALUES (${callValue})`)
+                        console.log("updating done")
+                } else if(roundNo <= lastPlayedRound.calls) {
                         console.log("old round", playerNumber, callValue, roundNo)
                         await db.query(`UPDATE roundsCalls SET ${playerNumber} = ${callValue} WHERE roundno = ${roundNo}`);
                 } else if (roundNo === lastPlayedRound.calls +1) {
@@ -138,7 +143,7 @@ async function updateScores(){
 async function postUsersRepo(users) {
         playersArr = users.map((user)=> user.username)
         if (playersArr.length !== 0){
-                await db.query(`DELETE FROM users`)
+                // await seed(users.length()) change here
                 await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
                     playersArr.map((playerName)=> [
                         playerName,
@@ -152,9 +157,14 @@ async function getLastRound() {
         const calls = await db.query('SELECT roundNo FROM roundsCalls ORDER BY roundno DESC LIMIT 1')
         const tricks = await db.query('SELECT roundNo FROM roundsTricks ORDER BY roundno DESC LIMIT 1')
         await Promise.all([tricks, calls])
-        return {
-                calls: calls.rows[0].roundno,
-                tricks: tricks.rows[0].roundno
+        if(calls.rows.length !== 0){
+                return {
+                        calls: calls.rows[0].roundno,
+                        tricks: tricks.rows[0]?.roundno
+                }
+        } else {
+                console.log("first round")
+                return undefined
         }
 }
 

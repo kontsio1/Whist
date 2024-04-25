@@ -21,19 +21,28 @@ import {
     Text,
 } from "@chakra-ui/react";
 import {useState} from "react";
+import {cellCoords} from "./GameScreen";
 
 interface tricksModalProps {
     isOpen: boolean,
     onClose: () => void
     handleChange?: (e: any) => void
-    addCall: (n: number) => void
+    addCall: (n: number, cell: cellCoords | undefined) => void
     addTrick?: () => void
     disabled?: boolean
+    selectedCell?: cellCoords
+    setSelectedCell: (arg0: undefined) => void
 }
 
 export const CallsAndTricksModal = (props: tricksModalProps) => {
     const [value, setValue] = useState<number>(0)
     const handleChange = (value: any) => setValue(value)
+    const submitValues = () => {
+        props.addCall(value, props.selectedCell)
+        props.setSelectedCell(undefined)
+        props.onClose()
+    }
+    
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
             <ModalOverlay/>
@@ -50,7 +59,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
                         </SliderTrack>
                         <SliderThumb fontSize='lg' boxSize='32px' children={value}/>
                     </Slider>
-                    <Button colorScheme='teal' variant='solid' onClick={() => props.addCall(value)}>Calls</Button>
+                    <Button colorScheme='teal' variant='solid' onClick={() => submitValues()}>Calls</Button>
                     <Button colorScheme='teal' variant='outline' onClick={props.addTrick}>Tricks</Button>
                 </ModalBody>
             </ModalContent>
