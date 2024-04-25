@@ -65,12 +65,17 @@ export const GameScreen = (type: any) => {
         }
     }
     
+    // const calculateColumnSum = (array: callsGetRequest[], column: string) => {
+    //     const player = column as keyof callsGetRequest
+    //     const sum = array.reduce((accumulator, currentValue) => {
+    //         return accumulator + currentValue[player];
+    //     }, 0);
+    // }
     const onClickCell = (cell: cellCoords) => {
         setSelectedCell(cell)
         onOpen()
     }
     
-    // @ts-ignore
     return (
         <div>
             <header>Game screen</header>
@@ -129,10 +134,9 @@ export const GameScreen = (type: any) => {
                     <Tfoot>
                         <Tr>
                             <Th isNumeric>Total:</Th>
-                            <Th isNumeric>125</Th>
-                            <Th isNumeric>14</Th>
-                            <Th isNumeric>86</Th>
-                            <Th isNumeric>79</Th>
+                            {playerNames.map(()=>(
+                                <Td isNumeric></Td>
+                            ))}
                         </Tr>
                     </Tfoot>
                 </Table>
