@@ -143,7 +143,8 @@ async function updateScores(){
 async function postUsersRepo(users) {
         playersArr = users.map((user)=> user.username)
         if (playersArr.length !== 0){
-                // await seed(users.length()) change here
+                console.log(playersArr)
+                await seed(playersArr.length)
                 await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
                     playersArr.map((playerName)=> [
                         playerName,

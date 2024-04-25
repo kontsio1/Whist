@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(port, () => {
+    console.log("App.js executing:")
     console.log(`Whist server listening on port ${port}`)
 })
 

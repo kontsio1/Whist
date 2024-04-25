@@ -4,23 +4,24 @@ const {getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, postRoundCallsRepo, 
 } = require("./Repo");
 const getUsers = (req, res, next) => {
     getUsersRepo().then((users)=> {
-        console.log('getting users')
+        console.log('Api: getUsers')
         res.status(200).send(users)
     })
 }
 const getRoundScores = (req, res) => {
-    console.log("getting scores")
+    console.log("Api: getRoundScores")
     getRoundScoresRepo().then((data)=> {
         res.status(200)
     })
 }
 const getRoundCalls = (req, res) => {
-    console.log("Handler: getting calls")
+    console.log("Api: getRoundCalls")
     getRoundCallsRepo().then((data)=> {
         res.status(200).send(data)
     })
 }
 const postRoundCalls = (req, res) => {
+    console.log("Api: postRoundCalls")
     if (req.body) {
         checkRoundsSync({calls: true}).then((passedCheck) => {
             if (passedCheck) {
@@ -28,7 +29,7 @@ const postRoundCalls = (req, res) => {
                     res.status(200).send({msg: "calls updated"})
                 })
             } else {
-                console.log("Desynced rounds")
+                console.log("Handler: Desynced rounds")
                 res.status(400).send({msg: "Desynced rounds"})
             }
         })
@@ -57,6 +58,7 @@ const postRoundTricks = (req, res) => {
     }
 }
 const postRoundTrick = (req, res) => {
+    console.log("Api: postRoundTricks")
     if(req.body){
         postRoundTrickRepo(req.body).then((msg) => {
             res.status(200).send(msg)
@@ -66,12 +68,13 @@ const postRoundTrick = (req, res) => {
     }
 }
 const getRoundTricks = (req, res) => {
-    console.log("Handler: getting tricks")
+    console.log("Api: getRoundTricks")
     getRoundTricksRepo().then((data)=>{
         res.status(200).send(data)
     })
 }
 const postUsers = (req, res) => {
+    console.log("Api: postUsers")
     if (req.body){
         postUsersRepo(req.body).then((data)=>{
             res.status(200).send(data)

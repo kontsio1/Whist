@@ -2,10 +2,13 @@ const format = require('pg-format');
 const db = require('./connection.js');
 
 const seed = async (numPlayers) => {
+    console.log("Seeding database")
+    try {
     await db.query(`DROP TABLE IF EXISTS roundsScores;`);
     await db.query(`DROP TABLE IF EXISTS roundsCalls;`);
     await db.query(`DROP TABLE IF EXISTS roundsTricks;`);
     await db.query(`DROP TABLE IF EXISTS users;`);
+    console.log("Dropping existing tables")
 
     let playersQuery = '';
     for (let i = 1; i <= numPlayers; i++) {
@@ -17,30 +20,38 @@ const seed = async (numPlayers) => {
             Id SERIAL primary key,
             Username varchar
         )`)
-    
+        console.log("Creating users Table")
+        
     const callsTablePromise = db.query(`
         CREATE TABLE roundsCalls
         (
             roundNo SERIAL PRIMARY KEY
             ${playersQuery}
         )`)
-
+        console.log("Creating roundCalls Table")
+        
     const tricksTablePromise = db.query(`
         CREATE TABLE roundsTricks
         (
             roundNo SERIAL PRIMARY KEY
             ${playersQuery}
         )`)
-    
+        console.log("Creating roundsTricks Table")
+        
     await Promise.all([usersTablePromise, callsTablePromise, tricksTablePromise]);
 
     const roundsScoreTablePromise = db.query(`
         CREATE TABLE roundsScores
         (
-            roundNo SERIAL PRIMARY KEY
-            dealer  INT,
+            roundNo SERIAL PRIMARY KEY,
+            dealer  INT
             ${playersQuery}
         )`)
+        console.log("Creating roundsScores Table")
+    }
+    catch(ex) {
+        throw ex
+    }
 };
     //inserting data - delete later?
     // const insertUsersQueryStr = format(

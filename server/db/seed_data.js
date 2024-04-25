@@ -7,7 +7,7 @@ const data = {
     userData: userData,
     rounds: roundsData
 }
-
+console.log("Seeding data for 6 players...")
 seed(6).then(()=>{
     return db.end()
 })

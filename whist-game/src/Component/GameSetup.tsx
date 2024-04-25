@@ -8,7 +8,7 @@ import {
 import {PlusSquareIcon} from "@chakra-ui/icons";
 import {AddPlayerModal, PlayerCard} from "./AddPlayerModal";
 import React, {MouseEventHandler, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {user} from "../Constants";
 
@@ -18,7 +18,7 @@ export const GameSetup = () => {
     const [playerBoxes, setPlayerBoxes] = useState<PlayerCard[]>([])
     const [disabled, setDisabled] = useState<boolean>(true)
     const [newPlayer, setNewPlayer] = useState<PlayerCard>()
-    
+    const navigate = useNavigate();
     const convertStateToRequestBody = (playerCards : PlayerCard[]): user[] => {
         return playerCards.map((card)=>{
             return {
@@ -64,6 +64,7 @@ export const GameSetup = () => {
     const handleStartGame = () => {
         const usersRequest = convertStateToRequestBody(playerBoxes)
         axios.post("/users", usersRequest)
+        navigate('/game')
     }
 
     return (
@@ -88,9 +89,7 @@ export const GameSetup = () => {
                 </GridItem>
             </Grid>
             <AddPlayerModal isOpen={isOpen} onClose={onCloseModal} addPlayer={addPlayer} handleChange={handleChange} disabled={disabled}/>
-            <Link to={'/game'}>
-                <Button onClick={handleStartGame} size='lg'>Start</Button>
-            </Link>
+            <Button onClick={handleStartGame} size='lg'>Start</Button>
         </div>
     )
 }
