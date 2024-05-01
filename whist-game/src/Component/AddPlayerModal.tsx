@@ -36,10 +36,6 @@ export const AddPlayerModal = (props: modalProps) => {
                 <ModalBody>
                     <Stack spacing={3}>
                         <Input variant='outline' placeholder='Player name' onChange={props.handleChange}/>
-                        <div>
-                            <Text fontSize={15}>Visible as:</Text>
-                            <Input variant='outline' placeholder='nickname'/>
-                        </div>
                     </Stack>
                 </ModalBody>
 

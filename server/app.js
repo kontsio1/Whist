@@ -25,10 +25,8 @@ app.post('/users', postUsers)
 app.get('/scores', getRoundScores)
 
 app.get('/calls', getRoundCalls)
-app.post('/calls', postRoundCalls)
 app.post('/call', postRoundCall)
 
-app.post('/tricks', postRoundTricks)
 app.post('/trick', postRoundTrick)
 app.get('/tricks', getRoundTricks)
 
