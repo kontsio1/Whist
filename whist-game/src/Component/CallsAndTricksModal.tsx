@@ -28,17 +28,26 @@ interface tricksModalProps {
     onClose: () => void
     handleChange?: (e: any) => void
     addCall: (n: number, cell: cellCoords | undefined) => void
-    addTrick?: () => void
+    addTrick: (n: number, cell: cellCoords | undefined) => void
     disabled?: boolean
     selectedCell?: cellCoords
     setSelectedCell: (arg0: undefined) => void
 }
-
+enum cellButton {
+    calls,
+    tricks
+} 
 export const CallsAndTricksModal = (props: tricksModalProps) => {
     const [value, setValue] = useState<number>(0)
     const handleChange = (value: any) => setValue(value)
-    const submitValues = () => {
-        props.addCall(value, props.selectedCell)
+    const submitValues = (input: cellButton) => {
+        if(input == cellButton.calls){
+            props.addCall(value, props.selectedCell)
+        } else if (input == cellButton.tricks) {
+            props.addTrick(value, props.selectedCell)
+        } else {
+            throw ReferenceError
+        }
         props.setSelectedCell(undefined)
         props.onClose()
     }
@@ -59,8 +68,8 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
                         </SliderTrack>
                         <SliderThumb fontSize='lg' boxSize='32px' children={value}/>
                     </Slider>
-                    <Button colorScheme='teal' variant='solid' onClick={() => submitValues()}>Calls</Button>
-                    <Button colorScheme='teal' variant='outline' onClick={props.addTrick}>Tricks</Button>
+                    <Button colorScheme='teal' variant='outline' onClick={() => submitValues(cellButton.tricks)}>Tricks</Button>
+                    <Button colorScheme='teal' variant='solid' onClick={() => submitValues(cellButton.calls)}>Calls</Button>
                 </ModalBody>
             </ModalContent>
         </Modal>

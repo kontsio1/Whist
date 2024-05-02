@@ -1,8 +1,16 @@
-import {Badge, Table, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, useDisclosure} from "@chakra-ui/react";
+import {TableContainer, useDisclosure} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
-import {callsGetRequest, callsPostRequest, user} from "../Constants";
+import {
+    callsGetRequest,
+    callsPostRequest,
+    scoresGetRequest,
+    tricksGetRequest,
+    tricksPostRequest,
+    user
+} from "../Constants";
 import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
+import {GameTable} from "./GameTable";
 
 export interface cellCoords {
     roundNo: number,
@@ -11,8 +19,9 @@ export interface cellCoords {
 export const GameScreen = (type: any) => {
     const [playerNames, setPlayerNames] = useState<user[]>([])
     const [playerCalls, setPlayerCalls] = useState<callsGetRequest[]>()
+    const [playerTricks, setPlayerTricks] = useState<tricksGetRequest[]>()
     const [selectedCell, setSelectedCell] = useState<cellCoords|undefined>()
-    // const [playerScores, setPlayerScores] = useState()
+    const [playerScores, setPlayerScores] = useState<scoresGetRequest[]>()
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
@@ -30,10 +39,36 @@ export const GameScreen = (type: any) => {
         getPlayersCalls().then((calls: callsGetRequest[] )=>{
             setPlayerCalls(calls)
         })
+        getPlayersTricks().then((tricks: tricksGetRequest[])=>{
+            setPlayerTricks(tricks)
+        })
+        getScores().then((scores: scoresGetRequest[])=>{
+            setPlayerScores(scores)
+        })
+        
     }
     const getPlayersCalls = async (): Promise<callsGetRequest[]> => {
         try {
             const resp = await axios.get("/calls");
+            return resp.data;
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+    const getScores = async (): Promise<scoresGetRequest[]> => {
+        try {
+            const resp = await axios.get("/scores");
+            console.log(resp.data, "<< scores")
+            return resp.data;
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+    const getPlayersTricks = async (): Promise<tricksGetRequest[]> => {
+        try {
+            const resp = await axios.get("/tricks");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -64,6 +99,22 @@ export const GameScreen = (type: any) => {
             throw ReferenceError
         }
     }
+    const addTrick = async (value: number, cell: cellCoords | undefined) => {
+        console.log(value,cell, "<<VALUE")
+        if(cell){
+            const newTrick : tricksPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
+            try {
+                await axios.post("/trick", newTrick)
+                await updateUsersAndScores()
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+        } else {
+            throw ReferenceError
+        }
+    }
+    
     
     // const calculateColumnSum = (array: callsGetRequest[], column: string) => {
     //     const player = column as keyof callsGetRequest
@@ -80,68 +131,9 @@ export const GameScreen = (type: any) => {
         <div>
             <header>Game screen</header>
             <TableContainer>
-                <Table>
-                    <Thead>
-                        <Tr>
-                            <Th isNumeric>Round No</Th>
-                            {
-                                playerNames.map((name, index) => (
-                                    <Th isNumeric>
-                                        <Badge colorScheme='blue' borderRadius={10}
-                                               padding={1}>Player {index + 1}</Badge>
-                                        <p>{name.username}</p>
-                                    </Th>
-                                ))
-                            }
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {playerCalls?.map((roundCalls, index)=>(
-                            <Tr>
-                                {
-                                    Object.keys(roundCalls).map((player)=>(
-                                        player === "roundno" ? <Td isNumeric>{roundCalls.roundno}</Td> :
-                                        <Td isNumeric bg={selectedCell &&
-                                        selectedCell.roundNo === index+1 &&
-                                        selectedCell.player === player
-                                            ? 'purple.200'
-                                            : undefined}>
-                                            <div onClick={()=> onClickCell({player,roundNo:index+1})} style={{cursor: "pointer"}}>
-                                                <Badge colorScheme='purple' borderRadius={10} padding={1}>{roundCalls[player as keyof callsGetRequest]}</Badge>
-                                            </div>
-                                        </Td>
-                                    ))
-                                }
-                            </Tr>
-                        ))}
-                        <Tr>
-                                <Td isNumeric>{playerCalls? playerCalls.length+1 : 1}</Td>
-                                {
-                                    playerNames?.map((user, index)=>(
-                                        <Td isNumeric bg={selectedCell &&
-                                            selectedCell.roundNo === (playerCalls? playerCalls.length+1 : 1) &&
-                                            selectedCell.player === `player${index+1}`
-                                            ? 'purple.200'
-                                            : undefined}>
-                                        <div onClick={()=> onClickCell({player: `player${index+1}`,roundNo:(playerCalls? playerCalls.length+1 : 1)})} style={{cursor: "pointer"}}>
-                                            <Badge colorScheme='purple' borderRadius={10} padding={1}>New round</Badge>
-                                        </div>
-                                    </Td>
-                                    ))
-                                }
-                        </Tr>
-                    </Tbody>
-                    <Tfoot>
-                        <Tr>
-                            <Th isNumeric>Total:</Th>
-                            {playerNames.map(()=>(
-                                <Td isNumeric></Td>
-                            ))}
-                        </Tr>
-                    </Tfoot>
-                </Table>
+                <GameTable playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
-            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
+            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
         </div>
     )
 }

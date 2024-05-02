@@ -63,11 +63,10 @@ export const GameSetup = () => {
 
     const handleStartGame = () => {
         const usersRequest = convertStateToRequestBody(playerBoxes)
-        axios.post("/users", usersRequest)
-        
-        setTimeout(() => {
+        axios.post("/users", usersRequest).then((response)=>{
+            console.log(response, "response")
             navigate('/game')
-        }, 1000);
+        })
     }
 
     return (

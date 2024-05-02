@@ -41,3 +41,13 @@ export interface tricksPostRequest {
     player5?: number
     player6?: number
 }
+export interface scoresGetRequest {
+    roundNo: number
+    dealer: number
+    player1?: number
+    player2?: number
+    player3?: number
+    player4?: number
+    player5?: number
+    player6?: number
+}

@@ -1,4 +1,4 @@
-import {callsGetRequest, tricksGetRequest, user} from "../Constants";
+import {callsGetRequest, scoresGetRequest, tricksGetRequest, user} from "../Constants";
 import {cellCoords} from "./GameScreen";
 import {Badge, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
 import React from "react";
@@ -7,11 +7,15 @@ interface gameTableProps {
     playerNames : user[],
     playerCalls : callsGetRequest[]|undefined,
     playerTricks : tricksGetRequest[]|undefined,
+    playerScores : scoresGetRequest[]|undefined,
     selectedCell : cellCoords|undefined,
     onClickCell : (cell: cellCoords)=>void
 }
 export const GameTable =(props : gameTableProps)=> {
-    const tricks = props.playerTricks?? []
+    const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno)?? []
+    const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo)?? []
+    console.log(tricks, "<<tricks")
+    // console.log(scores, "<<scores")
     return <Table>
         <Thead>
             <Tr>
@@ -46,6 +50,7 @@ export const GameTable =(props : gameTableProps)=> {
                                         <Badge id="Calls" colorScheme='purple' borderRadius={10} padding={2}
                                                style={{display: "inline-block"}}>{roundCalls[player as keyof callsGetRequest]}</Badge>
                                     </div>
+                                    <p>{(scores.length!==0)? (scores[index]? scores[index][player as keyof scoresGetRequest] : "") : ""}</p>
                                 </Td>
                         ))
                     }
