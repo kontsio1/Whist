@@ -101,7 +101,6 @@ async function updateScores(){
         
         const scores = tricks.map((tricksRow, index) => {
                 let callsRow = calls[index]
-                console.log('hi')
                 return calculateRowScores(tricksRow.roundno, callsRow, tricksRow)
         })
         console.log("New scores:",scores)
@@ -130,14 +129,19 @@ async function updateScores(){
 async function postUsersRepo(users) {
         playersArr = users.map((user)=> user.username)
         if (playersArr.length !== 0){
-                console.log(playersArr)
-                await seed(playersArr.length)
-                await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
-                    playersArr.map((playerName)=> [
-                        playerName,
-                    ])
-                ))
+                console.log("Adding users")
+                try {
+                        await seed(playersArr.length)
+                        await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
+                            playersArr.map((playerName)=> [
+                                playerName,
+                            ])
+                        ))
+                } catch (e) {
+                        console.log(e)
+                }
         }
+        console.log("Updating table structure")
         return playersArr
 }
 async function getLastRound() {

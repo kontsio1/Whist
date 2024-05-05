@@ -58,13 +58,11 @@ export const GameSetup = () => {
     }
     const onAddClick = () => {
         onOpen()
-        console.log(playerBoxes)
     }
 
     const handleStartGame = () => {
         const usersRequest = convertStateToRequestBody(playerBoxes)
         axios.post("/users", usersRequest).then((response)=>{
-            console.log(response, "response")
             navigate('/game')
         })
     }

@@ -1,24 +1,15 @@
 import {
-    Button, Center,
-    HStack,
+    Button,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalFooter,
     ModalHeader,
-    ModalOverlay, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper,
+    ModalOverlay,
     Slider,
     SliderFilledTrack,
     SliderThumb,
     SliderTrack,
-    Switch,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    Text,
 } from "@chakra-ui/react";
 import {useState} from "react";
 import {cellCoords} from "./GameScreen";

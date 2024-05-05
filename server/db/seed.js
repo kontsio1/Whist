@@ -1,5 +1,6 @@
 const format = require('pg-format');
 const db = require('./connection.js');
+const {createDealerTable} = require("../extensionMethods");
 
 const seed = async (numPlayers) => {
     console.log("Seeding database")
@@ -8,6 +9,7 @@ const seed = async (numPlayers) => {
     await db.query(`DROP TABLE IF EXISTS roundsCalls;`);
     await db.query(`DROP TABLE IF EXISTS roundsTricks;`);
     await db.query(`DROP TABLE IF EXISTS users;`);
+    await db.query(`DROP TABLE IF EXISTS dealer;`);
     console.log("Dropping existing tables")
 
     let playersQuery = '';
@@ -39,15 +41,16 @@ const seed = async (numPlayers) => {
         console.log("Creating roundsTricks Table")
         
     await Promise.all([usersTablePromise, callsTablePromise, tricksTablePromise]);
-
-    const roundsScoreTablePromise = db.query(`
+    
+    await db.query(`
         CREATE TABLE roundsScores
         (
-            roundNo SERIAL PRIMARY KEY,
-            dealer  INT
+            roundNo SERIAL PRIMARY KEY
             ${playersQuery}
         )`)
         console.log("Creating roundsScores Table")
+        
+    await createDealerTable(numPlayers, 1)
     }
     catch(ex) {
         throw ex

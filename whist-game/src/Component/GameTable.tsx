@@ -14,8 +14,6 @@ interface gameTableProps {
 export const GameTable =(props : gameTableProps)=> {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno)?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo)?? []
-    console.log(tricks, "<<tricks")
-    // console.log(scores, "<<scores")
     return <Table>
         <Thead>
             <Tr>

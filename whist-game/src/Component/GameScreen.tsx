@@ -59,7 +59,6 @@ export const GameScreen = (type: any) => {
     const getScores = async (): Promise<scoresGetRequest[]> => {
         try {
             const resp = await axios.get("/scores");
-            console.log(resp.data, "<< scores")
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -85,7 +84,6 @@ export const GameScreen = (type: any) => {
         }
     }
     const addCall = async (value: number, cell: cellCoords | undefined) => {
-        console.log(value,cell, "<<VALUE")
         if(cell){
             const newCall : callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
             try {
@@ -100,7 +98,6 @@ export const GameScreen = (type: any) => {
         }
     }
     const addTrick = async (value: number, cell: cellCoords | undefined) => {
-        console.log(value,cell, "<<VALUE")
         if(cell){
             const newTrick : tricksPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
             try {
