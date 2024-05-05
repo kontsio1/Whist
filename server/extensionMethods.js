@@ -22,8 +22,6 @@ function arrayToStringWithNull(array) {
 }
 
 async function createDealerTable (usersLength, startingDealer) {
-    const playerEnumerator = enumerator(startingDealer,usersLength)
-    
     const totalRounds = Math.floor(2*52/(usersLength))
     
     const createTableQuery = `
@@ -47,7 +45,7 @@ async function createDealerTable (usersLength, startingDealer) {
                     ELSE
                         cards := ${totalRounds} - i;
                     END IF;
-                    INSERT INTO dealer (cards, dealerplayer) VALUES (cards,'player${playerEnumerator()}');
+                    INSERT INTO dealer (cards) VALUES (cards);
                     i := i + 1;
                 END;
             END LOOP;
@@ -62,9 +60,10 @@ async function createDealerTable (usersLength, startingDealer) {
         `;
     
     db.query(createTableQuery)
-        .then(() => {
+        .then(async () => {
             console.log('Dealer table created successfully');
-            return db.query(populateCardsTableQuery);
+            await db.query(populateCardsTableQuery)
+            await seedDealerPlayerData(totalRounds, startingDealer, usersLength)
         })
         .then(() => {
             console.log('Dealer table populated successfully');
@@ -73,7 +72,15 @@ async function createDealerTable (usersLength, startingDealer) {
             console.error('Error creating table or seeding', err);
         });
 }
-
+async function seedDealerPlayerData(totalRounds,startingDealer,usersLength) {
+    const player = enumerator(startingDealer,usersLength);
+    let i= 1
+    while (i <= totalRounds) {
+        let playerNumber = player()
+        await db.query(`UPDATE dealer SET dealerplayer = ${playerNumber} WHERE roundno=${i}`)
+        i++;
+    }
+}
 function enumerator (startingDealer,usersLength){
     let currentNumber = startingDealer-1
     return function getPlayer() {

@@ -131,7 +131,7 @@ async function postUsersRepo(users) {
         if (playersArr.length !== 0){
                 console.log("Adding users")
                 try {
-                        await seed(playersArr.length)
+                        await seed(playersArr.length, 2) //first to play change later
                         await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
                             playersArr.map((playerName)=> [
                                 playerName,

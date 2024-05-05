@@ -2,7 +2,7 @@ const format = require('pg-format');
 const db = require('./connection.js');
 const {createDealerTable} = require("../extensionMethods");
 
-const seed = async (numPlayers) => {
+const seed = async (numPlayers,firstToDeal) => {
     console.log("Seeding database")
     try {
     await db.query(`DROP TABLE IF EXISTS roundsScores;`);
@@ -50,36 +50,11 @@ const seed = async (numPlayers) => {
         )`)
         console.log("Creating roundsScores Table")
         
-    await createDealerTable(numPlayers, 1)
+    await createDealerTable(numPlayers, firstToDeal)
     }
     catch(ex) {
         throw ex
     }
 };
-    //inserting data - delete later?
-    // const insertUsersQueryStr = format(
-    //     "INSERT INTO users ( Username ) VALUES %L RETURNING *;",
-    //     data.userData.map(({username}) => [
-    //         username,
-    //     ])
-    // );
-
-    // const insertRoundsData = format(
-    //     "INSERT INTO roundsscores ( dealer, player1, player2, player3, player4, player5, player6 ) VALUES %L RETURNING *;",
-    //     data.rounds.map(({dealer, player1, player2, player3, player4, player5, player6}) => [
-    //         dealer, player1, player2, player3, player4, player5, player6
-    //     ]) 
-    // )
-
-    // const usersPromise = db
-    //     .query(insertUsersQueryStr)
-    //     .then((result) => result.rows);
-    
-    // const roundsPromise = db
-    //     .query(insertRoundsData)
-    //     .then((result) => result.rows);
- 
-    // await Promise.all([usersPromise, roundsPromise]);
-    // await Promise.all([usersPromise]);
 
 module.exports = seed;
