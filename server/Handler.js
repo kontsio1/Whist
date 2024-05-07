@@ -1,5 +1,6 @@
 const {getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo,
-    getRoundTricksRepo
+    getRoundTricksRepo,
+    getGameDealersRepo
 } = require("./Repo");
 const getUsers = (req, res, next) => {
     getUsersRepo().then((users)=> {
@@ -53,4 +54,11 @@ const postUsers = (req, res) => {
     }
 }
 
-module.exports = { getUsers, getRoundScores, getRoundCalls, postUsers, postRoundCall, postRoundTrick, getRoundTricks }
+const getGameDealers = (req, res) => {
+    console.log("Api: getRoundTricks")
+    getGameDealersRepo().then((data)=>{
+        res.status(200).send(data)
+    })
+}
+
+module.exports = { getUsers, getRoundScores, getRoundCalls, postUsers, postRoundCall, postRoundTrick, getRoundTricks, getGameDealers }

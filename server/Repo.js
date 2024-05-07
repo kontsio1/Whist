@@ -2,17 +2,14 @@ const db = require('./db/connection');
 const format = require('pg-format');
 const seed = require("./db/seed");
 const {calculateRowScores, arrayToStringWithNull} = require("./extensionMethods");
-
 async function getUsersRepo() {
         const users = await db.query("SELECT * FROM users")
         return users.rows;
 }
-
 async function getRoundScoresRepo() {
-        const scores = await db.query("SELECT * FROM roundsscores INNER JOIN dealer as d on roundsscores.roundno = d.roundno ORDER BY d.roundno ASC")
+        const scores = await db.query("SELECT * FROM roundsscores ORDER BY roundno ASC")
         return scores.rows;
 }
-
 async function getRoundCallsRepo() {
         const calls = await db.query("SELECT * FROM roundsCalls ORDER BY roundno ASC")
         return calls.rows;
@@ -153,5 +150,9 @@ async function getLastRound() {
                 tricks: tricks.rows.length!==0? tricks.rows[0].roundno : undefined,
         }
 }
+async function getGameDealersRepo(){
+        const gameDealers = await db.query("SELECT * FROM dealer")
+        return gameDealers.rows
+}
 
-module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo }
+module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo, getGameDealersRepo }

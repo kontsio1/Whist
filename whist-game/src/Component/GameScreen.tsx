@@ -2,7 +2,7 @@ import {TableContainer, useDisclosure} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {
     callsGetRequest,
-    callsPostRequest,
+    callsPostRequest, dealerGetRequest,
     scoresGetRequest,
     tricksGetRequest,
     tricksPostRequest,
@@ -17,16 +17,26 @@ export interface cellCoords {
     player: string,
 }
 export const GameScreen = (type: any) => {
+    const initialDealerAndCardsState: dealerGetRequest[] = [{
+        roundno: 0,
+        cards: 1,
+        dealerplayer: "dealer not found"
+    }]
+    
     const [playerNames, setPlayerNames] = useState<user[]>([])
     const [playerCalls, setPlayerCalls] = useState<callsGetRequest[]>()
     const [playerTricks, setPlayerTricks] = useState<tricksGetRequest[]>()
     const [selectedCell, setSelectedCell] = useState<cellCoords|undefined>()
     const [playerScores, setPlayerScores] = useState<scoresGetRequest[]>()
+    const [dealerAndCards, setDealerAndCards] = useState<dealerGetRequest[]>(initialDealerAndCardsState)
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
         getPlayersNames().then((users: user[])=>{
             setPlayerNames(users)
+        })
+        getDealersAndCards().then((dealersAndCards: dealerGetRequest[])=>{
+            setDealerAndCards(dealersAndCards)
         })
         updateUsersAndScores()
     }, []);
@@ -34,7 +44,6 @@ export const GameScreen = (type: any) => {
     useEffect(() => {
         
     }, []); //change here instead of playerCalls
-    
     const updateUsersAndScores = async()=> {
         getPlayersCalls().then((calls: callsGetRequest[] )=>{
             setPlayerCalls(calls)
@@ -83,6 +92,15 @@ export const GameScreen = (type: any) => {
             throw error
         }
     }
+    const getDealersAndCards = async (): Promise<dealerGetRequest[]> => {
+        try {
+            const resp = await axios.get("/dealer");
+            return resp.data;
+        } catch (error) {
+            console.log("Error in get /dealer",error)
+            throw error
+        }
+    }
     const addCall = async (value: number, cell: cellCoords | undefined) => {
         if(cell){
             const newCall : callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
@@ -127,7 +145,7 @@ export const GameScreen = (type: any) => {
         <div>
             <header>Game screen</header>
             <TableContainer>
-                <GameTable playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} selectedCell={selectedCell} onClickCell={onClickCell} />
+                <GameTable playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
             <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
         </div>
