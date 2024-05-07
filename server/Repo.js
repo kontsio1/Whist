@@ -107,7 +107,6 @@ async function updateScores(){
         })
         const rounds = scores.map(row => row.roundno)
         
-        console.log(playersString, valuesStringArray, rounds)
         valuesStringArray.map(async(valuesString, index)=>{
                 try {
                         if(rounds[index] <= lastScoresRound) {

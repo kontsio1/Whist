@@ -1,9 +1,7 @@
 import {callsGetRequest, dealerGetRequest, scoresGetRequest, tricksGetRequest, user} from "../Constants";
 import {cellCoords} from "./GameScreen";
 import {Badge, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
-import React from "react";
-import {PlayerCard} from "./AddPlayerModal";
-
+import React, {useEffect, useState} from "react";
 interface gameTableProps {
     playerNames : user[],
     playerCalls : callsGetRequest[]|undefined,
@@ -16,7 +14,24 @@ interface gameTableProps {
 export const GameTable =(props : gameTableProps)=> {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno)?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo)?? []
+    const [totalScores, setTotalScores]=useState<number[]>(Array(props.playerNames.length))
     const currCallsLength = props.playerCalls?.length?? 0
+    
+    useEffect(() => {
+        if(scores.length != 0) {
+            const activePlayerKeys = Object.keys(scores[0]).slice(1)
+            setTotalScores(
+                activePlayerKeys.map((player) =>
+                    scores.reduce((acc, obj) => {
+                        if (obj !== null && player !== null) {
+                            return acc + (obj[player as keyof scoresGetRequest] ?? 0);
+                        } else {
+                            return acc;
+                        }
+                    }, 0))
+            )
+        }
+    }, [props.playerTricks, props.playerCalls]);
 
     const newRound = {
         roundno: props.playerCalls ? props.playerCalls.length+1: -1,
@@ -123,8 +138,9 @@ export const GameTable =(props : gameTableProps)=> {
         <Tfoot>
             <Tr>
                 <Th isNumeric>Total:</Th>
-                {props.playerNames.map(()=>(
-                    <Td isNumeric></Td>
+                <Td></Td>
+                {totalScores.map((value)=>(
+                    <Td isNumeric>{value}</Td>
                 ))}
             </Tr>
         </Tfoot>
