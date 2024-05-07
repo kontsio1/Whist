@@ -1,4 +1,4 @@
-import {TableContainer, useDisclosure} from "@chakra-ui/react";
+import {TableContainer, useDisclosure, useToast} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {
     callsGetRequest,
@@ -26,7 +26,7 @@ export const GameScreen = (type: any) => {
         cards: 1,
         dealerplayer: "dealer not found"
     }]
-    
+    const toast = useToast()
     const [playerNames, setPlayerNames] = useState<user[]>([])
     const [playerCalls, setPlayerCalls] = useState<callsGetRequest[]>()
     const [playerTricks, setPlayerTricks] = useState<tricksGetRequest[]>()
@@ -109,6 +109,29 @@ export const GameScreen = (type: any) => {
     const addCall = async (value: number, cell: cellCoords | undefined) => {
         if(cell){
             const newCall : callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
+            const dealerRound = dealerAndCards.find(d => d.roundno === cell.roundNo)
+            const isLastToPlay = cell.player.slice(-1) === dealerRound?.dealerplayer
+            
+            // if(isLastToPlay){
+             let callsRound = playerCalls?.find(c => c.roundno == cell.roundNo)
+                if(callsRound){
+                    callsRound = removeKeyFromObject(callsRound, cell.player as keyof callsGetRequest)
+                    const total = Object.values(callsRound).reduce((acc, val) => {
+                            return acc + val
+                    }, -callsRound.roundno);
+                    if(total+value == dealerRound?.cards){
+                        return toast({
+                            title: 'Call sum matches total tricks',
+                            description: `Sorry can't make that call`,
+                            status: 'error',
+                            duration: 1000,
+                            isClosable: true,
+                    })
+                    }
+                } else {
+                    console.log("round is undefined")
+                }
+            // } 
             try {
                 await axios.post("/call", newCall)
                 await updateUsersAndScores()
@@ -141,6 +164,11 @@ export const GameScreen = (type: any) => {
             setMaxTricksCallsForCell({calls:dealerRow?.cards?? 10, tricks:dealerRow?.cards?? 10})
         }
         onOpen()
+    }
+    function removeKeyFromObject(obj:callsGetRequest, keyToRemove: keyof callsGetRequest) {
+        const newObj = { ...obj };
+        delete newObj[keyToRemove as keyof callsGetRequest];
+        return newObj;
     }
     
     return (
