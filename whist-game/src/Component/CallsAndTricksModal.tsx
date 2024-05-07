@@ -12,7 +12,7 @@ import {
     SliderTrack,
 } from "@chakra-ui/react";
 import {useState} from "react";
-import {cellCoords} from "./GameScreen";
+import {cellCoords, maxCallsTricksForCell} from "./GameScreen";
 
 interface tricksModalProps {
     isOpen: boolean,
@@ -23,6 +23,7 @@ interface tricksModalProps {
     disabled?: boolean
     selectedCell?: cellCoords
     setSelectedCell: (arg0: undefined) => void
+    maxTricksAndCalls: maxCallsTricksForCell
 }
 enum cellButton {
     calls,
@@ -52,7 +53,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
                 </ModalHeader>
                 <ModalCloseButton/>
                 <ModalBody>
-                    <Slider defaultValue={0} min={0} max={6} /*to be dynamically changing*/ flex='1'
+                    <Slider defaultValue={0} min={0} max={props.maxTricksAndCalls.calls} flex='1'
                             focusThumbOnChange={true} value={value} onChange={handleChange} colorScheme="teal">
                         <SliderTrack>
                             <SliderFilledTrack/>

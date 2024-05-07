@@ -15,6 +15,7 @@ export const GameTable =(props : gameTableProps)=> {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno)?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo)?? []
     const [totalScores, setTotalScores]=useState<number[]>(Array(props.playerNames.length))
+    
     const currCallsLength = props.playerCalls?.length?? 0
     
     useEffect(() => {

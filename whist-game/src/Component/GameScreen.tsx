@@ -16,6 +16,10 @@ export interface cellCoords {
     roundNo: number,
     player: string,
 }
+export interface maxCallsTricksForCell {
+    calls: number,
+    tricks: number
+}
 export const GameScreen = (type: any) => {
     const initialDealerAndCardsState: dealerGetRequest[] = [{
         roundno: 0,
@@ -29,6 +33,7 @@ export const GameScreen = (type: any) => {
     const [selectedCell, setSelectedCell] = useState<cellCoords|undefined>()
     const [playerScores, setPlayerScores] = useState<scoresGetRequest[]>()
     const [dealerAndCards, setDealerAndCards] = useState<dealerGetRequest[]>(initialDealerAndCardsState)
+    const [maxCallsTricksForCell, setMaxTricksCallsForCell] = useState<maxCallsTricksForCell>({calls:0,tricks:0})
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
@@ -131,15 +136,12 @@ export const GameScreen = (type: any) => {
     }
     const onClickCell = (cell: cellCoords) => {
         setSelectedCell(cell)
+        if(dealerAndCards.length !=0){
+            const dealerRow = dealerAndCards.find((d)=> d.roundno == cell.roundNo)
+            setMaxTricksCallsForCell({calls:dealerRow?.cards?? 10, tricks:dealerRow?.cards?? 10})
+        }
         onOpen()
     }
-    
-    // const calculateColumnSum = (array: callsGetRequest[], column: string) => {
-    //     const player = column as keyof callsGetRequest
-    //     const sum = array.reduce((accumulator, currentValue) => {
-    //         return accumulator + currentValue[player];
-    //     }, 0);
-    // }
     
     return (
         <div>
@@ -147,7 +149,7 @@ export const GameScreen = (type: any) => {
             <TableContainer>
                 <GameTable playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
-            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell}/>
+            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
         </div>
     )
 }
