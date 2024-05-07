@@ -9,7 +9,7 @@ async function getUsersRepo() {
 }
 
 async function getRoundScoresRepo() {
-        const scores = await db.query("SELECT * FROM roundsScores ORDER BY roundno ASC")
+        const scores = await db.query("SELECT * FROM roundsscores INNER JOIN dealer as d on roundsscores.roundno = d.roundno ORDER BY d.roundno ASC")
         return scores.rows;
 }
 

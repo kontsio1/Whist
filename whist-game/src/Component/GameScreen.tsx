@@ -111,7 +111,10 @@ export const GameScreen = (type: any) => {
             throw ReferenceError
         }
     }
-    
+    const onClickCell = (cell: cellCoords) => {
+        setSelectedCell(cell)
+        onOpen()
+    }
     
     // const calculateColumnSum = (array: callsGetRequest[], column: string) => {
     //     const player = column as keyof callsGetRequest
@@ -119,10 +122,6 @@ export const GameScreen = (type: any) => {
     //         return accumulator + currentValue[player];
     //     }, 0);
     // }
-    const onClickCell = (cell: cellCoords) => {
-        setSelectedCell(cell)
-        onOpen()
-    }
     
     return (
         <div>
