@@ -1,6 +1,7 @@
 const {getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo,
     getRoundTricksRepo,
-    getGameDealersRepo
+    getGameDealersRepo,
+    postFirstDealerRepo
 } = require("./Repo");
 const getUsers = (req, res, next) => {
     getUsersRepo().then((users)=> {
@@ -61,4 +62,11 @@ const getGameDealers = (req, res) => {
     })
 }
 
-module.exports = { getUsers, getRoundScores, getRoundCalls, postUsers, postRoundCall, postRoundTrick, getRoundTricks, getGameDealers }
+const postFirstToDeal = (req, res) => {
+    console.log("Api: Posting First Dealer")
+    postFirstDealerRepo(req.body).then((data)=>{
+        res.status(200).send(data)
+    })
+}
+
+module.exports = { getUsers, getRoundScores, getRoundCalls, postUsers, postRoundCall, postRoundTrick, getRoundTricks, getGameDealers, postFirstToDeal }

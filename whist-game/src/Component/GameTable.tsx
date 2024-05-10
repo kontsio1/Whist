@@ -1,7 +1,14 @@
-import {callsGetRequest, dealerGetRequest, scoresGetRequest, tricksGetRequest, user} from "../Constants";
+import {
+    callsGetRequest,
+    dealerGetRequest,
+    dealerPostRequest,
+    scoresGetRequest,
+    tricksGetRequest,
+    user
+} from "../Constants";
 import {cellCoords} from "./GameScreen";
 import {Badge, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
+import React, {SyntheticEvent, useEffect, useState} from "react";
 interface gameTableProps {
     playerNames : user[],
     playerCalls : callsGetRequest[]|undefined,
@@ -10,12 +17,13 @@ interface gameTableProps {
     dealersAndCards : dealerGetRequest[],
     selectedCell : cellCoords|undefined,
     onClickCell : (cell: cellCoords)=>void
+    addDealer: (dealer: dealerPostRequest)=>void
 }
 export const GameTable =(props : gameTableProps)=> {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno)?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo)?? []
-    const [totalScores, setTotalScores]=useState<number[]>(Array(props.playerNames.length))
-    
+    const [totalScores, setTotalScores]= useState<number[]>(Array(props.playerNames.length))
+    const [startingDealer, setStartingDealer] = useState<number>()
     const currCallsLength = props.playerCalls?.length?? 0
     
     useEffect(() => {
@@ -33,16 +41,23 @@ export const GameTable =(props : gameTableProps)=> {
             )
         }
     }, [props.playerTricks, props.playerCalls]);
+    
+    const onSelectDealerChange = (player:any) => {
+        console.log(player,"<player")
+        setStartingDealer(player)
+        props.addDealer({firstToDeal: player} as dealerPostRequest)
+    }
 
     const newRound = {
         roundno: props.playerCalls ? props.playerCalls.length+1: -1,
         playerNumber: Number(props.dealersAndCards[currCallsLength] ? props.dealersAndCards[currCallsLength].dealerplayer : -1),
         get dealer() {
             if(this.roundno == 1) {
-                return <Select placeholder='Who deals first'>
-                    <option value='option1'>Option 1</option>
-                    <option value='option2'>Option 2</option>
-                    <option value='option3'>Option 3</option>
+                return <Select value={startingDealer} onChange={(e) => onSelectDealerChange(e.target.value)} variant={'filled'} placeholder='Who deals first'>{
+                    props.playerNames.map((user)=>(
+                        <option value={user.id}>{user.username}</option>
+                    ))
+                }
                 </Select>
             } else {
                 return props.playerNames[this.playerNumber-1] ? props.playerNames[this.playerNumber-1].username : <></>

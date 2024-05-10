@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const {getUsers, getRoundScores, getRoundCalls, postRoundCalls, postRoundScores, postRoundTricks, getScores, postUsers,
-    postRoundCall, postRoundTrick, getRoundTricks, getGameDealers
+    postRoundCall, postRoundTrick, getRoundTricks, getGameDealers, postFirstToDeal
 } = require("./Handler");
 
 const app = express()
@@ -31,6 +31,7 @@ app.post('/trick', postRoundTrick)
 app.get('/tricks', getRoundTricks)
 
 app.get('/dealer', getGameDealers)
+app.post('/dealer', postFirstToDeal)
 
 app.get('*', (req,res)=>{
     res.status(404).send('Invalid url my friend')

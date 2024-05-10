@@ -55,3 +55,7 @@ export interface dealerGetRequest {
     cards: number
     dealerplayer: string
 }
+
+export interface dealerPostRequest {
+    firstToDeal: number
+}

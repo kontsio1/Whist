@@ -1,7 +1,7 @@
 const db = require('./db/connection');
 const format = require('pg-format');
 const seed = require("./db/seed");
-const {calculateRowScores, arrayToStringWithNull} = require("./extensionMethods");
+const {calculateRowScores, arrayToStringWithNull, createDealerTable} = require("./extensionMethods");
 async function getUsersRepo() {
         const users = await db.query("SELECT * FROM users")
         return users.rows;
@@ -127,7 +127,7 @@ async function postUsersRepo(users) {
         if (playersArr.length !== 0){
                 console.log("Adding users")
                 try {
-                        await seed(playersArr.length, 2) //first to play change later
+                        await seed(playersArr.length, 1)
                         await db.query(format("INSERT INTO users (Username) VALUES %L RETURNING *;",
                             playersArr.map((playerName)=> [
                                 playerName,
@@ -154,4 +154,18 @@ async function getGameDealersRepo(){
         return gameDealers.rows
 }
 
-module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo, getGameDealersRepo }
+async function postFirstDealerRepo({firstToDeal}) {
+        try {
+                await db.query(`DROP TABLE IF EXISTS dealer;`);
+                console.log("Dropping existing dealer table")
+                const numPlayers = await getUsersRepo()
+                await createDealerTable(numPlayers.length, firstToDeal)
+        } 
+        catch (e) {
+                console.log('Error occured while posting first dealer:', e)
+                return e
+        }
+        return "Dealer Updated"
+}
+
+module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo, getGameDealersRepo, postFirstDealerRepo }

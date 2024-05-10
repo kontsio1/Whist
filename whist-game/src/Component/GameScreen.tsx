@@ -2,7 +2,7 @@ import {TableContainer, useDisclosure, useToast} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {
     callsGetRequest,
-    callsPostRequest, dealerGetRequest,
+    callsPostRequest, dealerGetRequest, dealerPostRequest,
     scoresGetRequest,
     tricksGetRequest,
     tricksPostRequest,
@@ -110,9 +110,6 @@ export const GameScreen = (type: any) => {
         if(cell){
             const newCall : callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
             const dealerRound = dealerAndCards.find(d => d.roundno === cell.roundNo)
-            const isLastToPlay = cell.player.slice(-1) === dealerRound?.dealerplayer
-            
-            // if(isLastToPlay){
              let callsRound = playerCalls?.find(c => c.roundno == cell.roundNo)
                 if(callsRound){
                     callsRound = removeKeyFromObject(callsRound, cell.player as keyof callsGetRequest)
@@ -124,14 +121,13 @@ export const GameScreen = (type: any) => {
                             title: 'Call sum matches total tricks',
                             description: `Sorry can't make that call`,
                             status: 'error',
-                            duration: 1000,
+                            duration: 2000,
                             isClosable: true,
                     })
                     }
                 } else {
                     console.log("round is undefined")
                 }
-            // } 
             try {
                 await axios.post("/call", newCall)
                 await updateUsersAndScores()
@@ -165,6 +161,15 @@ export const GameScreen = (type: any) => {
         }
         onOpen()
     }
+    const addDealer = async (newDealer: dealerPostRequest) => {
+        try {
+            await axios.post("/dealer", newDealer)
+            // await getDealersAndCards() too fast a request issue
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
     function removeKeyFromObject(obj:callsGetRequest, keyToRemove: keyof callsGetRequest) {
         const newObj = { ...obj };
         delete newObj[keyToRemove as keyof callsGetRequest];
@@ -175,7 +180,7 @@ export const GameScreen = (type: any) => {
         <div>
             <header>Game screen</header>
             <TableContainer>
-                <GameTable playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
+                <GameTable addDealer={addDealer} playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
             <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
         </div>
