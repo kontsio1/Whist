@@ -40,7 +40,7 @@ export const AddPlayerModal = (props: modalProps) => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button isDisabled={props.disabled} variant={'solid'} colorScheme={'teal'} mr={3} onClick={props.addPlayer}>
+                    <Button isDisabled={props.disabled} variant={'main'} mr={3} onClick={props.addPlayer}>
                         Add
                     </Button>
                     <Button mr={3} onClick={props.onClose}>

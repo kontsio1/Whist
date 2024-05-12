@@ -2,10 +2,10 @@ import {
     Avatar,
     Badge,
     Box, Button, Grid, GridItem,
-    Heading,
+    Heading, IconButton,
     useDisclosure, useToast
 } from "@chakra-ui/react";
-import {PlusSquareIcon} from "@chakra-ui/icons";
+import {ArrowBackIcon, ArrowForwardIcon, PlusSquareIcon} from "@chakra-ui/icons";
 import {AddPlayerModal, PlayerCard} from "./AddPlayerModal";
 import React, {MouseEventHandler, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
@@ -85,11 +85,12 @@ export const GameSetup = () => {
                     })
                 }
                 <GridItem style={{paddingTop: 100}}>
-                        <Button w='100%' h="100" leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>Add player</Button>
+                        <Button variant="custom" leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>Add player</Button>
                 </GridItem>
             </Grid>
             <AddPlayerModal isOpen={isOpen} onClose={onCloseModal} addPlayer={addPlayer} handleChange={handleChange} disabled={disabled}/>
-            <Button onClick={handleStartGame} size='lg'>Start</Button>
+            <Button variant={'main'} onClick={handleStartGame}>Start</Button>
+            <Link to={'/game'}><Button variant={'main'} aria-label='go back' rightIcon={<ArrowForwardIcon/>}>Resume game</Button></Link>
         </div>
     )
 }

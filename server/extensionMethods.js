@@ -1,5 +1,4 @@
 const db = require("./db/connection");
-
 function calculateRowScores(roundno, callsRow, tricksRow) {
     const scoresRow = {roundno}
     for (const player in callsRow) {
@@ -93,4 +92,22 @@ function enumerator (startingDealer,usersLength){
         }
     }
 }
-module.exports = {calculateRowScores, arrayToStringWithNull, createDealerTable}
+async function getLastRound() {
+    const calls = await db.query('SELECT roundNo FROM roundsCalls ORDER BY roundno DESC LIMIT 1')
+    const tricks = await db.query('SELECT roundNo FROM roundsTricks ORDER BY roundno DESC LIMIT 1')
+    await Promise.all([tricks, calls])
+    return {
+        calls: calls.rows.length!==0? calls.rows[0].roundno : undefined,
+        tricks: tricks.rows.length!==0? tricks.rows[0].roundno : undefined,
+    }
+}
+async function checkIfGameEnd({tricks,calls}) { //unused for now
+    // console.log(getLastRound)
+    const lastRound = await getLastRound()
+    const lastRoundNo = Math.max(lastRound.calls, lastRound.tricks)
+    const {rows} = await db.query("SELECT roundno FROM dealer ORDER BY roundno DESC LIMIT 1")
+    console.log(lastRoundNo,"<<lastround", rows)
+    // console.log(getGameDealersRepo,"<<rows")
+    return "ok"
+}
+module.exports = {calculateRowScores, arrayToStringWithNull, createDealerTable, checkIfGameEnd, getLastRound}

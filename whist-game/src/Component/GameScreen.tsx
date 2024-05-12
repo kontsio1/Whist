@@ -1,4 +1,4 @@
-import {TableContainer, useDisclosure, useToast} from "@chakra-ui/react";
+import {Button, IconButton, TableContainer, useDisclosure, useToast} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {
     callsGetRequest,
@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
 import {GameTable} from "./GameTable";
+import {Link} from "react-router-dom";
+import {ArrowBackIcon} from "@chakra-ui/icons";
 
 export interface cellCoords {
     roundNo: number,
@@ -114,6 +116,9 @@ export const GameScreen = (type: any) => {
                 if(callsRound){
                     callsRound = removeKeyFromObject(callsRound, cell.player as keyof callsGetRequest)
                     const total = Object.values(callsRound).reduce((acc, val) => {
+                        if (val == null){
+                            return -100
+                        }
                             return acc + val
                     }, -callsRound.roundno);
                     if(total+value == dealerRound?.cards){
@@ -177,12 +182,14 @@ export const GameScreen = (type: any) => {
     }
     
     return (
-        <div>
+        <div style={{padding:200}}>
             <header>Game screen</header>
+            <Link to={'/setup'}><IconButton variant={'main'} aria-label='go back' icon={<ArrowBackIcon/>}>Back</IconButton></Link>
             <TableContainer>
                 <GameTable addDealer={addDealer} playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
             <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
+            <Link to={'/endGame'}><Button variant={'main'}>End Game</Button></Link>
         </div>
     )
 }

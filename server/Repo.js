@@ -1,7 +1,7 @@
 const db = require('./db/connection');
 const format = require('pg-format');
 const seed = require("./db/seed");
-const {calculateRowScores, arrayToStringWithNull, createDealerTable} = require("./extensionMethods");
+const {calculateRowScores, arrayToStringWithNull, createDealerTable, getLastRound, checkIfGameEnd} = require("./extensionMethods");
 async function getUsersRepo() {
         const users = await db.query("SELECT * FROM users")
         return users.rows;
@@ -22,6 +22,7 @@ async  function postRoundCallRepo(playerObj) {
         const columns = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
         const playerNumber = Object.keys(playerObj)[1]
         console.log("postRoundCallRepo:", playerObj, "-playerObj")
+        await checkIfGameEnd({calls: true, tricks: false})
         
         if (columns.includes(playerNumber)) {
                 const callValue = playerObj[playerNumber]
@@ -140,20 +141,10 @@ async function postUsersRepo(users) {
         console.log("Updating table structure")
         return playersArr
 }
-async function getLastRound() {
-        const calls = await db.query('SELECT roundNo FROM roundsCalls ORDER BY roundno DESC LIMIT 1')
-        const tricks = await db.query('SELECT roundNo FROM roundsTricks ORDER BY roundno DESC LIMIT 1')
-        await Promise.all([tricks, calls])
-        return { 
-                calls: calls.rows.length!==0? calls.rows[0].roundno : undefined, 
-                tricks: tricks.rows.length!==0? tricks.rows[0].roundno : undefined,
-        }
-}
 async function getGameDealersRepo(){
         const gameDealers = await db.query("SELECT * FROM dealer")
         return gameDealers.rows
 }
-
 async function postFirstDealerRepo({firstToDeal}) {
         try {
                 await db.query(`DROP TABLE IF EXISTS dealer;`);
@@ -168,4 +159,4 @@ async function postFirstDealerRepo({firstToDeal}) {
         return "Dealer Updated"
 }
 
-module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo, getGameDealersRepo, postFirstDealerRepo }
+module.exports = { getUsersRepo, getRoundScoresRepo, getRoundCallsRepo, updateScores, checkRoundsSync, postUsersRepo, postRoundCallRepo, postRoundTrickRepo, getRoundTricksRepo, getGameDealersRepo, postFirstDealerRepo, getLastRound }

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {ChakraProvider} from "@chakra-ui/react";
+import {theme} from "./Utils/styles";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -12,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <App/>
             </ChakraProvider>
         </BrowserRouter>
