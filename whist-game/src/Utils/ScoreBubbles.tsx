@@ -6,7 +6,8 @@ interface scoreBubbleProps {
     tricks: number | string | undefined,
     className?: any,
     highlighted?: boolean,
-    zoomed?: boolean
+    zoomed?: boolean,
+    style?: any
 }
 
 const style = {

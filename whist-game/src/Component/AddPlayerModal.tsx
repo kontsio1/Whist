@@ -9,7 +9,6 @@ import {
     Stack,
     Text, Toast, useToast
 } from "@chakra-ui/react";
-import {MouseEventHandler, useState} from "react";
 
 interface modalProps {
     isOpen: boolean,

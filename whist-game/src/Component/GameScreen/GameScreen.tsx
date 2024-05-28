@@ -7,7 +7,7 @@ import {
     tricksGetRequest,
     tricksPostRequest,
     user
-} from "../Constants";
+} from "../../Constants";
 import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
 import {GameTable} from "./GameTable";
@@ -189,7 +189,7 @@ export const GameScreen = (type: any) => {
                 <GameTable addDealer={addDealer} playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
             </TableContainer>
             <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
-            <Link to={'/endGame'}><Button variant={'main'}>End Game</Button></Link>
+            <Link to={'/endGame'} style={{float:"right"}}><Button variant={'main'}>End Game</Button></Link>
         </div>
     )
 }

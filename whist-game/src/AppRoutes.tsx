@@ -3,7 +3,7 @@ import {PageNotFound} from "./Utils/PageNotFound";
 import {Home} from "./Component/Home";
 import {Rules} from "./Component/Rules";
 import {GameSetup} from "./Component/GameSetup";
-import {GameScreen} from "./Component/GameScreen";
+import {GameScreen} from "./Component/GameScreen/GameScreen";
 import {Stats} from "./Component/Stats";
 import {EndGame} from "./Component/EndGame";
 

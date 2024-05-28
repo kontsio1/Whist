@@ -5,12 +5,13 @@ import {
     scoresGetRequest,
     tricksGetRequest,
     user
-} from "../Constants";
+} from "../../Constants";
 import {cellCoords} from "./GameScreen";
-import {Badge, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
+import {Badge, Center, Circle, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import {Text} from '@chakra-ui/react'
-import {ScoreBubbles} from "../Utils/ScoreBubbles";
+import {ScoreBubbles} from "../../Utils/ScoreBubbles";
+import {ScoreBubble} from "./ScoreBubble";
 
 interface gameTableProps {
     playerNames: user[],
@@ -22,6 +23,7 @@ interface gameTableProps {
     onClickCell: (cell: cellCoords) => void
     addDealer: (dealer: dealerPostRequest) => void
 }
+
 export const GameTable = (props: gameTableProps) => {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno) ?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo) ?? []
@@ -29,6 +31,13 @@ export const GameTable = (props: gameTableProps) => {
     const [startingDealer, setStartingDealer] = useState<number>()
     const currCallsLength = props.playerCalls?.length ?? 0
     const lastRoundNo = props.dealersAndCards.slice(-1)[0] ? props.dealersAndCards.slice(-1)[0].roundno : undefined
+    
+    const backgroundColor = 'brand.100'
+    const SvgContainerStyle = {
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+    }
 
     useEffect(() => {
         if (scores.length != 0) {
@@ -88,7 +97,7 @@ export const GameTable = (props: gameTableProps) => {
                 <Th>Dealer</Th>
                 {
                     props.playerNames.map((name, index) => (
-                        <Th>
+                        <Th style={{textAlign: "center"}}>
                             <Badge variant={'main'} colorScheme='blue' borderRadius={10}
                                    padding={1}>Player {index + 1}</Badge>
                             <Text>{name.username}</Text>
@@ -117,11 +126,15 @@ export const GameTable = (props: gameTableProps) => {
                                     return <Td bg={props.selectedCell &&
                                     props.selectedCell.roundNo === index + 1 &&
                                     props.selectedCell.player === player
-                                        ? 'brand.400'
+                                        ? backgroundColor
                                         : undefined}>
                                         <div onClick={() => props.onClickCell({player, roundNo: index + 1})}
-                                             style={{cursor: "pointer", whiteSpace: "nowrap"}}>
-                                            <ScoreBubbles highlighted={(index + 1 === (props.playerCalls? props.playerCalls.length: 1))} score={(scores.length !== 0) ? (scores[index] ? scores[index][player as keyof scoresGetRequest] : "") : ""} calls={roundCalls[player as keyof callsGetRequest]} tricks={(tricks.length !== 0) ? (tricks[index] ? tricks[index][player as keyof callsGetRequest] : "") : ""}/>
+                                             style={{...SvgContainerStyle, cursor: "pointer", whiteSpace: "nowrap"}}>
+                                            <ScoreBubbles
+                                                highlighted={(index + 1 === (props.playerCalls ? props.playerCalls.length : 1))}
+                                                score={(scores.length !== 0) ? (scores[index] ? scores[index][player as keyof scoresGetRequest] : "") : ""}
+                                                calls={roundCalls[player as keyof callsGetRequest]}
+                                                tricks={(tricks.length !== 0) ? (tricks[index] ? tricks[index][player as keyof callsGetRequest] : "") : ""}/>
                                         </div>
                                     </Td>
                             }
@@ -138,12 +151,12 @@ export const GameTable = (props: gameTableProps) => {
                             <Td bg={props.selectedCell &&
                             props.selectedCell.roundNo === (props.playerCalls ? props.playerCalls.length + 1 : 1) &&
                             props.selectedCell.player === `player${index + 1}`
-                                ? 'brand.400'
+                                ? backgroundColor
                                 : undefined}>
                                 <div onClick={() => props.onClickCell({
                                     player: `player${index + 1}`,
                                     roundNo: (props.playerCalls ? props.playerCalls.length + 1 : 1)
-                                })} style={{cursor: "pointer"}}>
+                                })} style={{...SvgContainerStyle, cursor: "pointer"}}>
                                     <Badge borderRadius={10} padding={1}>New round</Badge>
                                 </div>
                             </Td>
@@ -157,7 +170,7 @@ export const GameTable = (props: gameTableProps) => {
                 <Th>Total:</Th>
                 <Td></Td>
                 {totalScores.map((value) => (
-                    <Td>{value}</Td>
+                    <Td style={{textAlign:"center"}}><ScoreBubble value={value}/></Td>
                 ))}
             </Tr>
         </Tfoot>
