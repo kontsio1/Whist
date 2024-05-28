@@ -7,9 +7,10 @@ import {
     user
 } from "../Constants";
 import {cellCoords} from "./GameScreen";
-import {Badge, Center, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
+import {Badge, Select, Table, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import {Text} from '@chakra-ui/react'
+import {ScoreBubbles} from "../Utils/ScoreBubbles";
 
 interface gameTableProps {
     playerNames: user[],
@@ -21,7 +22,6 @@ interface gameTableProps {
     onClickCell: (cell: cellCoords) => void
     addDealer: (dealer: dealerPostRequest) => void
 }
-
 export const GameTable = (props: gameTableProps) => {
     const tricks = props.playerTricks?.sort((a, b) => a.roundno - b.roundno) ?? []
     const scores = props.playerScores?.sort((a, b) => a.roundNo - b.roundNo) ?? []
@@ -121,13 +121,8 @@ export const GameTable = (props: gameTableProps) => {
                                         : undefined}>
                                         <div onClick={() => props.onClickCell({player, roundNo: index + 1})}
                                              style={{cursor: "pointer", whiteSpace: "nowrap"}}>
-                                            <Badge id="Tricks" variant={'trick'} borderRadius={10} padding={2}
-                                                   style={{display: "inline-block"}}>{(tricks.length !== 0) ? (tricks[index] ? tricks[index][player as keyof callsGetRequest] : "") : ""}</Badge>
-                                            <p style={{display: "inline-block", margin: "0 5px"}}>/</p>
-                                            <Badge id="Calls" colorScheme='purple' borderRadius={10} padding={2}
-                                                   style={{display: "inline-block"}}>{roundCalls[player as keyof callsGetRequest]}</Badge>
+                                            <ScoreBubbles highlighted={(index + 1 === (props.playerCalls? props.playerCalls.length: 1))} score={(scores.length !== 0) ? (scores[index] ? scores[index][player as keyof scoresGetRequest] : "") : ""} calls={roundCalls[player as keyof callsGetRequest]} tricks={(tricks.length !== 0) ? (tricks[index] ? tricks[index][player as keyof callsGetRequest] : "") : ""}/>
                                         </div>
-                                        <p>{(scores.length !== 0) ? (scores[index] ? scores[index][player as keyof scoresGetRequest] : "") : ""}</p>
                                     </Td>
                             }
                         })
