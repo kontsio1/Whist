@@ -59,3 +59,10 @@ export interface dealerGetRequest {
 export interface dealerPostRequest {
     firstToDeal: number
 }
+
+export interface statsGetRequest {
+    "accuracy": number,
+    "precision": number[],
+    "recall": number[]
+    "F1Score": number[]
+}

@@ -1,8 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const {getUsers, getRoundScores, getRoundCalls, postRoundCalls, postRoundScores, postRoundTricks, getScores, postUsers,
-    postRoundCall, postRoundTrick, getRoundTricks, getGameDealers, postFirstToDeal
+    postRoundCall, postRoundTrick, getRoundTricks, getGameDealers, postFirstToDeal, getEndOfGameInfo
 } = require("./Handler");
+const {handleWrongPath, handleNotFoundErrors, handleCustomErrors, finalHandleErrors} = require("./errorHandlers");
 
 const app = express()
 const port = 8080
@@ -33,6 +34,12 @@ app.get('/tricks', getRoundTricks)
 app.get('/dealer', getGameDealers)
 app.post('/dealer', postFirstToDeal)
 
-app.get('*', (req,res)=>{
-    res.status(404).send('Invalid url my friend')
-})
+app.get('/stats/:player', getEndOfGameInfo);
+
+app.get('*', handleWrongPath);
+
+app.use(handleCustomErrors)
+
+app.use(handleCustomErrors)
+
+app.use(finalHandleErrors)

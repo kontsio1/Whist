@@ -12,6 +12,7 @@ import React, {useEffect, useState} from "react";
 import {Text} from '@chakra-ui/react'
 import {ScoreBubbles} from "../../Utils/ScoreBubbles";
 import {ScoreBubble} from "./ScoreBubble";
+import {FlamingBadge} from "../FlamingBadge";
 
 interface gameTableProps {
     playerNames: user[],
@@ -90,7 +91,7 @@ export const GameTable = (props: gameTableProps) => {
             }
         }
     }
-    return <Table>
+    return <Table variant={'striped'} style={{ position: "relative", display: "inline-block" }}>
         <Thead>
             <Tr>
                 <Th>Cards</Th>
@@ -98,8 +99,9 @@ export const GameTable = (props: gameTableProps) => {
                 {
                     props.playerNames.map((name, index) => (
                         <Th style={{textAlign: "center"}}>
-                            <Badge variant={'main'} colorScheme='blue' borderRadius={10}
-                                   padding={1}>Player {index + 1}</Badge>
+                            <FlamingBadge name={index+1} streak={0}/>
+                            {/*<Badge variant={'main'} colorScheme='blue' borderRadius={10}*/}
+                            {/*       padding={1}>Player {index + 1}</Badge>*/}
                             <Text>{name.username}</Text>
                         </Th>
                     ))

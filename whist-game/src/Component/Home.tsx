@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {AppDrawer} from "./AppDrawer";
 import {Link} from "react-router-dom";
-import {Box, Button} from "@chakra-ui/react";
+import {Badge, Box, Button} from "@chakra-ui/react";
 import {ScoreBubbles} from "../Utils/ScoreBubbles";
+import {FlamingBadge} from "./FlamingBadge";
 
 export const Home = () => {
     const zoomStyle = {
@@ -22,11 +23,11 @@ export const Home = () => {
             <header>Welcome to Whiiist</header>
             <AppDrawer/>
             <body>
-            <ScoreBubbles score={238} tricks={8} calls={4} />
-            <Box sx={{...zoomStyle, ':hover': {transform: 'scale(1.2)'}}}><p>hello there bro</p></Box>
-            <Link to={'/setup'}>
-                <Button size='lg'>Start new game</Button>
-            </Link>
+                <Link to={'/setup'}>
+                    <Button size='lg'>Start new game</Button>
+                </Link>
+                <FlamingBadge name={1} streak={0}></FlamingBadge>
+                <ScoreBubbles score={238} tricks={8} calls={4}/>
             </body>
         </div>
     )

@@ -5,13 +5,10 @@ import {
     ModalCloseButton,
     ModalContent,
     ModalHeader,
-    ModalOverlay, NumberInput,
-    Slider,
-    SliderFilledTrack,
-    SliderThumb,
-    SliderTrack, useNumberInput, VStack,
+    ModalOverlay, 
+    useNumberInput
 } from "@chakra-ui/react";
-import {CSSProperties, useState} from "react";
+import {CSSProperties} from "react";
 import {cellCoords, maxCallsTricksForCell} from "./GameScreen";
 
 interface tricksModalProps {
@@ -48,7 +45,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
             step: 1,
             defaultValue: 0,
             min: 0,
-            max: 9,
+            max: 13,
             precision: 0,
             allowMouseWheel: true
         })
@@ -74,9 +71,9 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
                 <ModalBody>
                     <div style={containerStyle}>
                         <HStack maxW='300px' style={{padding:30}}>
-                            <Button size={'lg'} {...inc}>+</Button>
-                            <Input size={'lg'} style={{textAlign: 'center'}} {...input}/>
                             <Button size={'lg'} {...dec}>-</Button>
+                            <Input size={'lg'} style={{textAlign: 'center'}} {...input}/>
+                            <Button size={'lg'} {...inc}>+</Button>
                         </HStack>
                     <HStack>
                         <Circle size={100} bg='brand.200' color='black' _hover={{ bg: "brand.100", color:"white" }}>

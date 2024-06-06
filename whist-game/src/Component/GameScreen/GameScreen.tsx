@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
 import {GameTable} from "./GameTable";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {ArrowBackIcon} from "@chakra-ui/icons";
 
 export interface cellCoords {
@@ -39,13 +39,14 @@ export const GameScreen = (type: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
-        getPlayersNames().then((users: user[])=>{
-            setPlayerNames(users)
-        })
-        getDealersAndCards().then((dealersAndCards: dealerGetRequest[])=>{
-            setDealerAndCards(dealersAndCards)
-        })
-        updateUsersAndScores()
+        getPlayersNames().then((users: user[]) => {
+            setPlayerNames(users);
+            return getDealersAndCards();
+        }).then((dealersAndCards: dealerGetRequest[]) => {
+            setDealerAndCards(dealersAndCards);
+        }).catch(error => {
+            console.error('Error fetching data', error);
+        });
     }, []);
 
     useEffect(() => {
