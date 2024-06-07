@@ -6,7 +6,7 @@ import {statsGetRequest, user} from "../../Constants";
 import {calculateAverage} from "../../Utils/calculateAverage";
 import {findMaxValue} from "../../Utils/findMaxValue";
 import {Radar} from "./Visuals/Radar/Radar";
-import {data} from "./Visuals/Radar/data";
+import {Data, data} from "./Visuals/Radar/data";
 
 export const PlayerStats = () => {
     const { player } = useParams()
@@ -53,7 +53,13 @@ export const PlayerStats = () => {
                         </Tooltip>
                     </VStack>
                     <Text>{`Your best call is: ${bestCall.maxIndex} calls with a score of: ${bestCall.max}`}</Text>
-                    <Radar data={data} width={500} height={500}
+                    <Radar data={
+                        [
+                    { accuracy: 5.1, precision: 9.5, recall: 1.4, name: "calling 1" },
+                    { accuracy: 4.9, precision: 3.0, recall: 9.4, name: "calling 2" },
+                    { accuracy: 2.7, precision: 1.2, recall: 1.3, name: "calling 3" },
+                        ]
+                    } width={300} height={300}
                            axisConfig={[
                                { name: 'accuracy', max: 10 },
                                { name: 'precision', max: 10 },
