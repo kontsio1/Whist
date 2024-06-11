@@ -20,7 +20,7 @@ const getRoundScores = (req, res) => {
         next(err)
     })
 }
-const getRoundCalls = (req, res) => {
+const getRoundCalls = (req, res, next) => {
     console.log("Api: getRoundCalls")
     getRoundCallsRepo().then((data)=> {
         res.status(200).send(data)
@@ -28,7 +28,7 @@ const getRoundCalls = (req, res) => {
         next(err)
     })
 }
-const postRoundCall = (req, res) => {
+const postRoundCall = (req, res, next) => {
     if(req.body) {
         postRoundCallRepo(req.body).then((msg) => {
             updateScores().then(r => res.status(200).send(msg))
@@ -37,7 +37,7 @@ const postRoundCall = (req, res) => {
         })
     }
 }
-const postRoundTrick = (req, res) => {
+const postRoundTrick = (req, res, next) => {
     console.log("Api: postRoundTricks")
     if(req.body) {
         postRoundTrickRepo(req.body).then((msg) => {
