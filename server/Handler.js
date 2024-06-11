@@ -12,7 +12,7 @@ const getUsers = (req, res, next) => {
         next(err)
     })
 }
-const getRoundScores = (req, res) => {
+const getRoundScores = (req, res, next) => {
     console.log("Api: getRoundScores")
     getRoundScoresRepo().then((data)=> {
         res.status(200).send(data)
