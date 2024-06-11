@@ -12,7 +12,7 @@ const getUsers = (req, res, next) => {
         next(err)
     })
 }
-const getRoundScores = (req, res) => {
+const getRoundScores = (req, res, next) => {
     console.log("Api: getRoundScores")
     getRoundScoresRepo().then((data)=> {
         res.status(200).send(data)
@@ -20,7 +20,7 @@ const getRoundScores = (req, res) => {
         next(err)
     })
 }
-const getRoundCalls = (req, res) => {
+const getRoundCalls = (req, res, next) => {
     console.log("Api: getRoundCalls")
     getRoundCallsRepo().then((data)=> {
         res.status(200).send(data)
@@ -28,7 +28,7 @@ const getRoundCalls = (req, res) => {
         next(err)
     })
 }
-const postRoundCall = (req, res) => {
+const postRoundCall = (req, res, next) => {
     if(req.body) {
         postRoundCallRepo(req.body).then((msg) => {
             updateScores().then(r => res.status(200).send(msg))
@@ -37,7 +37,7 @@ const postRoundCall = (req, res) => {
         })
     }
 }
-const postRoundTrick = (req, res) => {
+const postRoundTrick = (req, res, next) => {
     console.log("Api: postRoundTricks")
     if(req.body) {
         postRoundTrickRepo(req.body).then((msg) => {
@@ -90,7 +90,7 @@ const getEndOfGameInfo = async (req, res, next) => {
     const playerNo = activeUsers.findIndex(u=> u.username === req.params.player)
     if(playerNo >= 0){
     console.log(`Api: Getting stats for ${req.params.player}`)
-    getEndOfGameStatistics(`player${playerNo}`).then((data) => {
+    getEndOfGameStatistics(`player${playerNo+1}`).then((data) => {
         res.status(200).send(data)
     }).catch((err)=>{
         next(err)

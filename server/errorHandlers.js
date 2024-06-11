@@ -6,8 +6,8 @@ exports.handleCustomErrors = (err, req, res, next) => {
     }
 };
 exports.finalHandleErrors = (err, req, res, next) => {
-    res.status(500).send({ msg: "Server went bzz bzz..." });
+    res.status(500).send({ msg: "Server went bzz bzz..." , err});
 };
-exports.handleWrongPath = (req, res) => {
-    res.status(404).send({msg: 'Invalid url my friend'})
+exports.handleWrongPath = (err, req, res) => {
+    res.status(404).send({msg: 'Invalid url my friend', err})
 }
