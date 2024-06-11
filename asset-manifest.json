@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Whist/static/css/main.f855e6bc.css",
+    "main.js": "/Whist/static/js/main.156b2f12.js",
+    "static/js/787.f3fcb77d.chunk.js": "/Whist/static/js/787.f3fcb77d.chunk.js",
+    "index.html": "/Whist/index.html",
+    "main.f855e6bc.css.map": "/Whist/static/css/main.f855e6bc.css.map",
+    "main.156b2f12.js.map": "/Whist/static/js/main.156b2f12.js.map",
+    "787.f3fcb77d.chunk.js.map": "/Whist/static/js/787.f3fcb77d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.156b2f12.js"
+  ]
+}
