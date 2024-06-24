@@ -25,6 +25,7 @@ const getRoundCalls = (req, res, next) => {
     getRoundCallsRepo().then((data)=> {
         res.status(200).send(data)
     }).catch((err)=>{
+        console.log(err)
         next(err)
     })
 }
@@ -33,6 +34,7 @@ const postRoundCall = (req, res, next) => {
         postRoundCallRepo(req.body).then((msg) => {
             updateScores().then(r => res.status(200).send(msg))
         }).catch((err) => {
+            console.log(err)
             next(err)
         })
     }
