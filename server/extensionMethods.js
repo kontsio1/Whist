@@ -58,15 +58,10 @@ async function createDealerTable (usersLength, startingDealer) {
             );
         `;
     
-    db.query(createTableQuery)
-        .then(async () => {
+    await db.query(createTableQuery)
             console.log('Dealer table created successfully');
-            await db.query(populateCardsTableQuery)
-            await seedDealerPlayerData(totalRounds, startingDealer, usersLength)
-        })
-        .then(() => {
-            console.log('Dealer table populated successfully');
-        })
+    await db.query(populateCardsTableQuery)
+    await seedDealerPlayerData(totalRounds, startingDealer, usersLength)
         .catch(err => {
             console.error('Error creating table or seeding', err);
         });
