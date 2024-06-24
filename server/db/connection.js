@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 const {readFileSync} = require("fs");
-const ENV = process.env.NODE_ENV || "production";
+const ENV = process.env.NODE_ENV || "development";
 
 require("dotenv").config({
     path: `${__dirname}/../.env.${ENV}`,
