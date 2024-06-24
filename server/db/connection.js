@@ -24,6 +24,7 @@ const config =
         }
         : {};
 const db = new Pool(config)
+console.log("Database config:", config)
 
 async function testQuery() {
     const client = await db.connect();
