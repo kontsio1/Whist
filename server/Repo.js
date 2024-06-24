@@ -15,22 +15,25 @@ async function getUsersRepo() {
     if(users.rows.length === 0){
         return Promise.reject({status: 404, msg: "Users table not Found"})
     }
+    console.log("Users", users.rows)
     return users.rows;
 }
 
 async function getRoundScoresRepo() {
     const scores = await db.query("SELECT * FROM roundsscores ORDER BY roundno ASC")
+    console.log("Scores", scores.rows)
     return scores.rows;
 }
 
 async function getRoundCallsRepo() {
     const calls = await db.query("SELECT * FROM roundsCalls ORDER BY roundno ASC")
-    console.log()
+    console.log("Calls", calls.rows)
     return calls.rows;
 }
 
 async function getRoundTricksRepo() {
     const tricks = await db.query("SELECT * FROM roundsTricks")
+    console.log("Tricks", tricks.rows)
     return tricks.rows
 }
 
