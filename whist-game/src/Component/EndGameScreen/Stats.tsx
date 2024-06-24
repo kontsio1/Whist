@@ -3,6 +3,7 @@ import axios from "axios";
 import {Avatar, Badge, Box, Button, GridItem, Heading, Text} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import api from "../../api";
 
 export const Stats = () => {
     const [players, setPlayers] = useState<string[]>([])
@@ -16,7 +17,7 @@ export const Stats = () => {
     }, []);
     const getPlayerStats = async (): Promise<statsGetRequest> => {
         try {
-            const resp = await axios.get("/stats/player1");
+            const resp = await api.get("/stats/player1");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -25,7 +26,7 @@ export const Stats = () => {
     }
     const getPlayersNames = async (): Promise<user[]> => {
         try {
-            const resp = await axios.get("/users");
+            const resp = await api.get("/users");
             return resp.data;
         } catch (error) {
             console.log(error)

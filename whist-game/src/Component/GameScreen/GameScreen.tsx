@@ -8,11 +8,11 @@ import {
     tricksPostRequest,
     user
 } from "../../Constants";
-import axios from "axios";
 import {CallsAndTricksModal} from "./CallsAndTricksModal";
 import {GameTable} from "./GameTable";
 import {Link, useNavigate} from "react-router-dom";
 import {ArrowBackIcon} from "@chakra-ui/icons";
+import api from "../../api";
 
 export interface cellCoords {
     roundNo: number,
@@ -39,6 +39,7 @@ export const GameScreen = (type: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
+        console.log("hi", process.env.REACT_APP_API_BASE_URL)
         getPlayersNames().then((users: user[]) => {
             setPlayerNames(users);
             return getDealersAndCards();
@@ -49,9 +50,9 @@ export const GameScreen = (type: any) => {
         });
     }, []);
 
-    useEffect(() => {
-        
-    }, []); //change here instead of playerCalls
+    // useEffect(() => {
+    //    
+    // }, []); //change here instead of playerCalls
     const updateUsersAndScores = async()=> {
         getPlayersCalls().then((calls: callsGetRequest[] )=>{
             setPlayerCalls(calls)
@@ -66,7 +67,7 @@ export const GameScreen = (type: any) => {
     }
     const getPlayersCalls = async (): Promise<callsGetRequest[]> => {
         try {
-            const resp = await axios.get("/calls");
+            const resp = await api.get("/calls");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -75,7 +76,7 @@ export const GameScreen = (type: any) => {
     }
     const getScores = async (): Promise<scoresGetRequest[]> => {
         try {
-            const resp = await axios.get("/scores");
+            const resp = await api.get("/scores");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -84,7 +85,7 @@ export const GameScreen = (type: any) => {
     }
     const getPlayersTricks = async (): Promise<tricksGetRequest[]> => {
         try {
-            const resp = await axios.get("/tricks");
+            const resp = await api.get("/tricks");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -93,7 +94,7 @@ export const GameScreen = (type: any) => {
     }
     const getPlayersNames = async (): Promise<user[]> => {
         try {
-            const resp = await axios.get("/users");
+            const resp = await api.get("/users");
             return resp.data;
         } catch (error) {
             console.log(error)
@@ -102,7 +103,7 @@ export const GameScreen = (type: any) => {
     }
     const getDealersAndCards = async (): Promise<dealerGetRequest[]> => {
         try {
-            const resp = await axios.get("/dealer");
+            const resp = await api.get("/dealer");
             return resp.data;
         } catch (error) {
             console.log("Error in get /dealer",error)
@@ -135,7 +136,7 @@ export const GameScreen = (type: any) => {
                     console.log("round is undefined")
                 }
             try {
-                await axios.post("/call", newCall)
+                await api.post("/call", newCall)
                 await updateUsersAndScores()
             } catch (error) {
                 console.log(error)
@@ -149,7 +150,7 @@ export const GameScreen = (type: any) => {
         if(cell){
             const newTrick : tricksPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
             try {
-                await axios.post("/trick", newTrick)
+                await api.post("/trick", newTrick)
                 await updateUsersAndScores()
             } catch (error) {
                 console.log(error)
@@ -169,7 +170,7 @@ export const GameScreen = (type: any) => {
     }
     const addDealer = async (newDealer: dealerPostRequest) => {
         try {
-            await axios.post("/dealer", newDealer)
+            await api.post("/dealer", newDealer)
             // await getDealersAndCards() too fast a request issue
         } catch (error) {
             console.log(error)

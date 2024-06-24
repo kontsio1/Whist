@@ -11,8 +11,8 @@ import {PlayerStats} from "./Component/EndGameScreen/PlayerStats";
 export const AppRoutes =(props: any)=>{
     return (
         <Routes>
+            <Route path="/" element={<Home/>}/>
             <Route path="*" element={<PageNotFound/>}/>
-            <Route path="/home" element={<Home/>}/>
             <Route path="/rules" element={<Rules/>} />
             <Route path="/setup" element={<GameSetup/>} />
             <Route path="/game" element={<GameScreen/>} />

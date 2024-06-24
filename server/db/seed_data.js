@@ -4,6 +4,7 @@ const seed = require('./seed');
 const db = require('./connection')
 
 console.log("Seeding data for 6 players...")
-seed(6,2).then(()=>{  //(numPlayers,firstToDeal)
-    return db.end()
+seed(6,1).then(async () => {  //(numPlayers,firstToDeal)
+    console.log("Seeding completed")
+    await db.end()
 })

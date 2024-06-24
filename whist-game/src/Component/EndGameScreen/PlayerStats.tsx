@@ -6,7 +6,6 @@ import {statsGetRequest, user} from "../../Constants";
 import {calculateAverage} from "../../Utils/calculateAverage";
 import {findMaxValue} from "../../Utils/findMaxValue";
 import {Radar} from "./Visuals/Radar/Radar";
-import {Data, data} from "./Visuals/Radar/data";
 
 export const PlayerStats = () => {
     const { player } = useParams()
@@ -32,6 +31,15 @@ export const PlayerStats = () => {
             throw error
         }
     }
+    const radarLegend = []
+    console.log(stats, "<<stats")
+    const radarData = stats?.precision.map((p,index)=> {
+        const name = index + "-Calls"
+        radarLegend.push(name)
+        // @ts-ignore
+        return {precision:p, accuracy: stats?.accuracy, recall: stats?.recall[index], name:name}
+    })
+    
     return  <div>
         <Heading>{player}</Heading>
         {
@@ -53,18 +61,7 @@ export const PlayerStats = () => {
                         </Tooltip>
                     </VStack>
                     <Text>{`Your best call is: ${bestCall.maxIndex} calls with a score of: ${bestCall.max}`}</Text>
-                    <Radar data={
-                        [
-                    { accuracy: 5.1, precision: 9.5, recall: 1.4, name: "calling 1" },
-                    { accuracy: 4.9, precision: 3.0, recall: 9.4, name: "calling 2" },
-                    { accuracy: 2.7, precision: 1.2, recall: 1.3, name: "calling 3" },
-                        ]
-                    } width={300} height={300}
-                           axisConfig={[
-                               { name: 'accuracy', max: 10 },
-                               { name: 'precision', max: 10 },
-                               { name: 'recall', max: 10 },
-                           ]}/>
+                    <Radar data={radarData} width={300} height={300}/>
                 </div>
         }
     </div>

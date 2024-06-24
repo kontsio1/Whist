@@ -9,8 +9,8 @@ import {ArrowBackIcon, ArrowForwardIcon, PlusSquareIcon} from "@chakra-ui/icons"
 import {AddPlayerModal, PlayerCard} from "./AddPlayerModal";
 import React, {MouseEventHandler, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
 import {user} from "../Constants";
+import api from "../api";
 
 export const GameSetup = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -62,7 +62,7 @@ export const GameSetup = () => {
 
     const handleStartGame = () => {
         const usersRequest = convertStateToRequestBody(playerBoxes)
-        axios.post("/users", usersRequest).then((response)=>{
+        api.post("/users", usersRequest).then((response)=>{
             navigate('/game')
         })
     }

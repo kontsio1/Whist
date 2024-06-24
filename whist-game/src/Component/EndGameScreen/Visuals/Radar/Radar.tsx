@@ -24,12 +24,18 @@ type YScale = d3.ScaleRadial<number, number, never>;
 type RadarProps = {
     width: number;
     height: number;
-    data: Data;
-    axisConfig: AxisConfig[];
+    data?: Data;
+    legend?: string[];
+    axisConfig?: AxisConfig[];
 };
-export const Radar = ({width, height, data, axisConfig}: RadarProps) => {
+export const Radar = ({width, height, data, axisConfig, legend}: RadarProps) => {
     const outerRadius = Math.min(width, height) / 2 - MARGIN;
-
+        console.log(data)
+    
+    if(!data) {
+        return <div></div>
+    }
+    axisConfig = axisConfig ?? [{ name: 'accuracy', max: 1 },{ name: 'precision', max: 1 },{ name: 'recall', max: 1 }]
     // The x scale provides an angle for each variable of the dataset
     const allVariableNames = axisConfig.map((axis) => axis.name);
     const xScale = d3
@@ -38,6 +44,7 @@ export const Radar = ({width, height, data, axisConfig}: RadarProps) => {
         .range([0, 2 * Math.PI]);
 
     // Compute the y scales: 1 scale per variable.
+    
     // Provides the distance to the center.
     let yScales: { [name: string]: YScale } = {};
     axisConfig.forEach((axis) => {
@@ -55,6 +62,7 @@ export const Radar = ({width, height, data, axisConfig}: RadarProps) => {
     const lineGenerator = d3.lineRadial();
 
     const allLines = data.map((series, i) => {
+        // @ts-ignore
         const allCoordinates = axisConfig.map((axis) => {
             const yScale = yScales[axis.name];
             const angle = xScale(axis.name) ?? 0; // I don't understand the type of scalePoint. IMO x cannot be undefined since I'm passing it something of type Variable.
@@ -81,45 +89,34 @@ export const Radar = ({width, height, data, axisConfig}: RadarProps) => {
             />
         );
     });
-
     //Legend
+    var keys = legend ?? ["1 Call", "2 Calls", "3 Calls"];
+
     const Svg = d3.select("#my_radar");
+    // Create a group for the legend
+    const legendGroup = Svg.append("g")
+        .attr("transform", "translate(10, 10)"); // Adjust translate values as needed
 
-// create a list of keys
-    var keys = ["1 Call", "2 Calls", "3 Calls"]
-
-
-// Add one dot in the legend for each name.
-    Svg.selectAll("mydots")
+    // Add one dot in the legend for each name
+    legendGroup.selectAll("mydots")
         .data(keys)
         .enter()
         .append("circle")
-        .attr("cx", 100)
-        .attr("cy", (d, i) => {
-            return 98 + i * 25
-        }) // 100 is where the first dot appears. 25 is the distance between dots
-        .attr("r", 7)
-        .style("fill", (d) => {
-            return colorScale(d) as string
-        })
+        .attr("cx", 10)
+        .attr("cy", (d, i) => 10 + i * 20) // Adjust spacing as needed
+        .attr("r", 5) // Adjust radius as needed
+        .style("fill", d => colorScale(d) as string);
 
-// Add one dot in the legend for each name.
-    Svg.selectAll("mylabels")
+    // Add one text label in the legend for each name
+    legendGroup.selectAll("mylabels")
         .data(keys)
         .enter()
         .append("text")
-        .attr("x", 120) //text distance
-        .attr("y", function (d, i) {
-            return 100 + i * 25
-        }) // 100 is where the first dot appears. 25 is the distance between dots
-        .style("fill", (d) => {
-            return colorScale(d) as string
-        })
-        .text(function (d) {
-            return d
-        })
-        // .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
+        .attr("x", 20) // Adjust text distance from circles
+        .attr("y", (d, i) => 10 + i * 20) // Adjust spacing as needed
+        .style("fill", d => colorScale(d) as string)
+        .text(d => d)
+        .style("alignment-baseline", "middle");
 
     return (
         <div>
@@ -134,7 +131,7 @@ export const Radar = ({width, height, data, axisConfig}: RadarProps) => {
                     {allLines}
                 </g>
             </svg>
-            <svg id={"my_radar"} height='300' width='300'/>
+            <svg id={"my_radar"} height='100' width='100'/>
             </HStack>
         </div>
     );

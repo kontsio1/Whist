@@ -41,6 +41,7 @@ const seed = async (numPlayers,firstToDeal) => {
         console.log("Creating roundsTricks Table")
         
     await Promise.all([usersTablePromise, callsTablePromise, tricksTablePromise]);
+    console.log("Users, Calls, Tricks Ok")
     
     const scoresTablePromise = db.query(`
         CREATE TABLE roundsScores
@@ -50,11 +51,14 @@ const seed = async (numPlayers,firstToDeal) => {
         )`)
         console.log("Creating roundsScores Table")
         
-    const dealerTablePromise = createDealerTable(numPlayers, firstToDeal)
+    const dealerTablePromise = await createDealerTable(numPlayers, firstToDeal)
         
     await Promise.all([dealerTablePromise, scoresTablePromise]);
+    console.log("Dealer, Scores Ok")
+    
     }
     catch(ex) {
+        console.log(ex)
         throw ex
     }
 };

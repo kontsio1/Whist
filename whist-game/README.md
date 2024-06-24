@@ -1,19 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
@@ -64,13 +48,17 @@ Next steps:
 - seed db by using suitable Object Relational Mapping (ORM) Framework ex:
   - [Node-postgres](https://node-postgres.com/features/connecting#environment-variables) 
   - [Prisma](https://www.prisma.io/docs/orm)
-- create api
+  - 
+- create api.ts where I configure axios to point at the api (make sure to name .env.production and .env.development in full -not .env.prod etc)
+
 
 Links to keep in mind:
 
+- url: https://kontsio1.github.io/Whist/#/game
 - Dashboard: https://dashboard.render.com/web/srv-cm8btten7f5s73dciusg/deploys/dep-cm8c2h0cmk4c7391cscg
 - Api: https://whist-game-web-service.onrender.com/
 - DB: [here](postgres://lsahubkw:DocupetHVC2NcF_LGA5CXJBIB-fwtqFN@mel.db.elephantsql.com/lsahubkw)
+- new DB: https://tembo.io/
 
 ### To Do
 - remove toast on adding player
