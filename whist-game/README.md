@@ -59,6 +59,12 @@ Links to keep in mind:
 - Api: https://whist-game-web-service.onrender.com/
 - DB: [here](postgres://lsahubkw:DocupetHVC2NcF_LGA5CXJBIB-fwtqFN@mel.db.elephantsql.com/lsahubkw)
 - new DB: https://tembo.io/
+- 
+For render 
+- can't find module: delete node modules and reinstall
+- environment variables (no """)
+- environment variable set node version
+- set root directory: "server"
 
 ### To Do
 - remove toast on adding player
