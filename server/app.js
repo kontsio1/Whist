@@ -6,7 +6,9 @@ const {getUsers, getRoundScores, getRoundCalls, postRoundCalls, postRoundScores,
 const {handleWrongPath, handleNotFoundErrors, handleCustomErrors, finalHandleErrors} = require("./errorHandlers");
 
 const app = express()
-const port = 8080
+// const port = 8080
+
+const { port = 8080 } = process.env;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
