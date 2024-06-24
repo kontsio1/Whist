@@ -25,6 +25,5 @@ const config =
         }
         : {};
 const db = new Pool(config)
-console.log(`Database url:${process.env.DATABASE_URL}`)
 
 module.exports = db

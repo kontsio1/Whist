@@ -25,6 +25,7 @@ async function getRoundScoresRepo() {
 
 async function getRoundCallsRepo() {
     const calls = await db.query("SELECT * FROM roundsCalls ORDER BY roundno ASC")
+    console.log()
     return calls.rows;
 }
 
