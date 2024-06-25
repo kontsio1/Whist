@@ -6,14 +6,20 @@ import {
     DrawerHeader,
     DrawerOverlay,
     List,
-    ListItem, useDisclosure
+    ListItem, Text, useDisclosure
 } from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 import React from "react";
 import {HamburgerIcon} from "@chakra-ui/icons";
 
+// const useStyles = makeStyles((theme) => ({
+//     listItem: {
+//         padding: 10
+//     }
+// }));
 export const AppDrawer = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
+    // const classes = useStyles();
     return (
         <div>
             <Button leftIcon={<HamburgerIcon/>} colorScheme='teal' onClick={onOpen}>Settings</Button>
@@ -24,13 +30,13 @@ export const AppDrawer = () => {
                     <DrawerHeader>Navigation </DrawerHeader>
                     <DrawerBody>
                         <List>
-                            <ListItem><Link to={'/stats'}><Button variant={'ghost'}>Stats</Button></Link></ListItem>
+                            <ListItem><Link to={'/stats'}><b>Stats</b></Link></ListItem>
                             <Divider/>
-                            <ListItem><Link to={'/rules'}><Button variant={'ghost'}>Rules</Button></Link></ListItem>
+                            <ListItem><Link to={'/rules'}><b>Rules</b></Link></ListItem>
                             <Divider/>
-                            <ListItem><Link to={'/settings'}><Button variant={'ghost'}>Settings</Button></Link></ListItem>
+                            <ListItem><Link to={'/settings'}><b>Settings</b></Link></ListItem>
                             <Divider/>
-                            <ListItem><Link to={'/about'}><Button variant={'ghost'}>About</Button></Link></ListItem>
+                            <ListItem><Link to={'/about'}><b>About</b></Link></ListItem>
                         </List>
                     </DrawerBody>
                 </DrawerContent>
