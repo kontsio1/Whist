@@ -1,7 +1,7 @@
 import {
     Avatar,
     Badge,
-    Box, Button, Grid, GridItem,
+    Box, Button, Center, Grid, GridItem,
     Heading, IconButton,
     useDisclosure, useToast
 } from "@chakra-ui/react";
@@ -69,14 +69,14 @@ export const GameSetup = () => {
 
     return (
         <div>
-            <Heading>New Game Setup</Heading>
+            <header>New Game Setup</header>
             <Grid templateColumns='repeat(5, 1fr)' gap={5}>
                 {
                     playerBoxes.map((playerInfo, index)=>{
                         return (
                             <GridItem>
-                                <Box bg={'teal'} p={4} color={'white'} height={60} maxW={300} borderRadius={20}>
-                                <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index}`}</Badge>
+                                <Box className={"playerBox"}>
+                                    <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index}`}</Badge>
                                     <p>{playerInfo.username}</p>
                                     <Avatar bg='teal.500' />
                                 </Box>
@@ -84,8 +84,8 @@ export const GameSetup = () => {
                             )
                     })
                 }
-                <GridItem style={{paddingTop: 100}}>
-                        <Button variant="custom" leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>Add player</Button>
+                <GridItem style={{margin:"auto"}}>
+                    <Button variant="custom" className={"bigCustomButton"} leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>Add player</Button>
                 </GridItem>
             </Grid>
             <AddPlayerModal isOpen={isOpen} onClose={onCloseModal} addPlayer={addPlayer} handleChange={handleChange} disabled={disabled}/>

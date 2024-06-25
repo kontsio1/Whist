@@ -39,7 +39,6 @@ export const GameScreen = (type: any) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     
     useEffect(() => {
-        console.log("hi", process.env.REACT_APP_API_BASE_URL)
         getPlayersNames().then((users: user[]) => {
             setPlayerNames(users);
             return getDealersAndCards();
@@ -184,14 +183,16 @@ export const GameScreen = (type: any) => {
     }
     
     return (
-        <div style={{padding:200}}>
+        <>
             <header>Game screen</header>
-            <Link to={'/setup'}><IconButton variant={'main'} aria-label='go back' icon={<ArrowBackIcon/>}>Back</IconButton></Link>
-            <TableContainer>
-                <GameTable addDealer={addDealer} playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
-            </TableContainer>
-            <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
-            <Link to={'/endGame'} style={{float:"right"}}><Button variant={'main'}>End Game</Button></Link>
-        </div>
+            <div className={"tableContainer"}>
+                <Link to={'/setup'}><IconButton variant={'main'} aria-label='go back' icon={<ArrowBackIcon/>}>Back</IconButton></Link>
+                <TableContainer>
+                    <GameTable addDealer={addDealer} playerNames={playerNames} playerCalls={playerCalls} playerTricks={playerTricks} playerScores={playerScores} dealersAndCards={dealerAndCards} selectedCell={selectedCell} onClickCell={onClickCell} />
+                </TableContainer>
+                <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall} addTrick={addTrick} selectedCell={selectedCell} setSelectedCell={setSelectedCell} maxTricksAndCalls={maxCallsTricksForCell}/>
+                <Link to={'/endGame'}><Button variant={'main'}>End Game</Button></Link>
+            </div>
+        </>
     )
 }

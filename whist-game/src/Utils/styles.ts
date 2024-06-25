@@ -23,10 +23,7 @@ const secondaryButton = defineStyle(()=> {
 const addPlayerButton = defineStyle(()=> {
     return {
         color: 'white',
-        w:'100%', 
-        h:"100",
         bgGradient: 'linear(to-r, brand.300, brand.100)',
-        margin: 5,
     }
 })
 const playerNameBadge = defineStyle(()=> {
