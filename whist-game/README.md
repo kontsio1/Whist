@@ -41,16 +41,26 @@ Install:
 - express -> for api
 
 Setup services:
-- configure db in [ElephantSQL](https://www.elephantsql.com/)
+- configure db in [ElephantSQL](https://www.elephantsql.com/) - alternative now
 - host api with [Render](https://render.com/)
 
 Next steps:
 - seed db by using suitable Object Relational Mapping (ORM) Framework ex:
   - [Node-postgres](https://node-postgres.com/features/connecting#environment-variables) 
   - [Prisma](https://www.prisma.io/docs/orm)
-  - 
+
 - create api.ts where I configure axios to point at the api (make sure to name .env.production and .env.development in full -not .env.prod etc)
 
+For render
+- can't find module: delete node modules and reinstall
+- environment variables (no """)
+- environment variable set node version
+- set root directory: "server"
+- 
+Deployment:
+- use cors to enable cros origin requests
+- check database connection from terminal-local and production
+- add certificate if necessary
 
 Links to keep in mind:
 
@@ -59,12 +69,6 @@ Links to keep in mind:
 - Api: https://whist-game-web-service.onrender.com/
 - DB: [here](postgres://lsahubkw:DocupetHVC2NcF_LGA5CXJBIB-fwtqFN@mel.db.elephantsql.com/lsahubkw)
 - new DB: https://tembo.io/
-- 
-For render 
-- can't find module: delete node modules and reinstall
-- environment variables (no """)
-- environment variable set node version
-- set root directory: "server"
 
 ### To Do
 - remove toast on adding player

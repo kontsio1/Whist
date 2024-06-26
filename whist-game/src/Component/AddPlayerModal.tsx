@@ -30,7 +30,7 @@ export const AddPlayerModal = (props: modalProps) => {
         <Modal isOpen={props.isOpen} onClose={props.onClose}>
             <ModalOverlay/>
             <ModalContent>
-                <ModalHeader className={"drawerHeader"}>Add new player</ModalHeader>
+                <ModalHeader className={"borderlessHeader"}>Add new player</ModalHeader>
                 <ModalCloseButton/>
                 <ModalBody>
                     <Stack spacing={3}>

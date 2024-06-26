@@ -44,7 +44,7 @@ header {
   font-size: 2rem;
 }
 
-.drawerHeader {
+.borderlessHeader {
   border: none;
   margin-bottom: 0px;
 }

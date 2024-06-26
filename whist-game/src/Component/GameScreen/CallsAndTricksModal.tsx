@@ -1,5 +1,5 @@
 import {
-    Button, Center, Circle, CircularProgress, HStack, Input,
+    Button, Center, Circle, CircularProgress, DrawerHeader, HStack, Input,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -35,10 +35,12 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
         if (inputStatus == cellButton.calls) {
             props.addCall(input.value, props.selectedCell).then(() => {
                 setLoading(false)
+                props.onClose()
             })
         } else if (inputStatus == cellButton.tricks) {
             props.addTrick(input.value, props.selectedCell).then(() => {
                 setLoading(false)
+                props.onClose()
             })
         } else {
             throw ReferenceError
@@ -70,7 +72,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
         <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
             <ModalOverlay/>
             <ModalContent>
-                <ModalHeader style={{display: "inline-block"}}>
+                <ModalHeader className={'borderlessHeader'} style={{display: "inline-block"}}>
                     <p>How many?</p>
                 </ModalHeader>
                 <ModalCloseButton/>

@@ -21,7 +21,7 @@ export const AppDrawer = () => {
                 <DrawerOverlay/>
                 <DrawerContent>
                     <DrawerCloseButton/>
-                    <DrawerHeader className={'drawerHeader'}> Navigation </DrawerHeader>
+                    <DrawerHeader className={'borderlessHeader'}> Navigation </DrawerHeader>
                     <DrawerBody>
                         <List>
                             <ListItem className={"drawerLi"}><Link to={'/stats'}><b>Stats</b></Link></ListItem>
