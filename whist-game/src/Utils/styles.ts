@@ -8,7 +8,9 @@ const mainButton = defineStyle(()=> {
         margin: 5,
         '&:hover': {
             transform: 'scale(1.2)',
+            bgGradient: 'linear(to-r, brand.300, brand.100)'
         },
+        _loading: { opacity: 0.8 },
     }
 })
 const secondaryButton = defineStyle(()=> {
@@ -17,13 +19,18 @@ const secondaryButton = defineStyle(()=> {
         color: 'white',
         '&:hover': {
             transform: 'scale(1.2)',
+            bgGradient: 'linear(to-r, brand.200, brand.100)'
         },
     }
 })
 const addPlayerButton = defineStyle(()=> {
     return {
         color: 'white',
-        bgGradient: 'linear(to-r, brand.300, brand.100)',
+        background: 'brand.300',
+        '&:hover': {
+            transform: 'scale(1.2)',
+            bgGradient: 'linear(to-r, brand.500, brand.300)'
+            }
     }
 })
 const playerNameBadge = defineStyle(()=> {

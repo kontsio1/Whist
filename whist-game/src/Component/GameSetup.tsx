@@ -18,6 +18,7 @@ export const GameSetup = () => {
     const [playerBoxes, setPlayerBoxes] = useState<PlayerCard[]>([])
     const [disabled, setDisabled] = useState<boolean>(true)
     const [newPlayer, setNewPlayer] = useState<PlayerCard>()
+    const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate();
     const convertStateToRequestBody = (playerCards : PlayerCard[]): user[] => {
         return playerCards.map((card)=>{
@@ -61,8 +62,10 @@ export const GameSetup = () => {
     }
 
     const handleStartGame = () => {
+        setLoading(true)
         const usersRequest = convertStateToRequestBody(playerBoxes)
         api.post("/users", usersRequest).then((response)=>{
+            setLoading(false)
             navigate('/game')
         })
     }
@@ -89,7 +92,7 @@ export const GameSetup = () => {
                 </GridItem>
             </Grid>
             <AddPlayerModal isOpen={isOpen} onClose={onCloseModal} addPlayer={addPlayer} handleChange={handleChange} disabled={disabled}/>
-            <Button variant={'main'} onClick={handleStartGame}>Start</Button>
+            <Button variant={'main'} onClick={handleStartGame} isLoading={loading}>Start</Button>
             <Link to={'/game'}><Button variant={'main'} aria-label='go back' rightIcon={<ArrowForwardIcon/>}>Resume game</Button></Link>
         </div>
     )
