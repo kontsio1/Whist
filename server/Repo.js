@@ -186,7 +186,7 @@ async function getEndOfGameStatistics(player) {
         return await ConfusionMatrixForPlayer(player)
     } catch (e) {
         console.log(`Failed to evaluate confusion matrix for player:${player}`, e)
-        return Promise.reject({status: 404, msg: "User not Found"})
+        return Promise.reject({status: 500, msg: "User stats could not be evaluated"})
     }
 }
 

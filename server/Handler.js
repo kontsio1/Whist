@@ -92,7 +92,7 @@ const getEndOfGameInfo = async (req, res, next) => {
     const playerNo = activeUsers.findIndex(u=> u.username === req.params.player)
     if(playerNo >= 0){
     console.log(`Api: Getting stats for ${req.params.player}`)
-    getEndOfGameStatistics(`player${playerNo}`).then((data) => {
+    getEndOfGameStatistics(`player${playerNo+1}`).then((data) => {
         res.status(200).send(data)
     }).catch((err)=>{
         next(err)
