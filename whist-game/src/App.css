@@ -39,7 +39,7 @@
 
 header {
   text-align: center;
-  border: 6px solid #046865;
+  font-family: "Lucida Console", "Courier New", monospace;
   margin-bottom: 1rem;
   font-size: 2rem;
 }

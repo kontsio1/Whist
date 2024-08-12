@@ -8,7 +8,7 @@ export interface SkeletonProps {
     children?: ReactNode;
 }
 export const SingleSkeleton: React.FC<SkeletonProps> = ({width, height, isLoaded, children}) => {
-    return <Skeleton isLoaded={isLoaded} fadeDuration={5} width={width} height={height??'20px'} startColor='brand.300' endColor='brand.400'>
+    return <Skeleton isLoaded={isLoaded} fadeDuration={5} width={width} height={height??'20px'} startColor='brand.100' endColor='brand.500'>
         {children}
     </Skeleton>
 }
