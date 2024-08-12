@@ -42,22 +42,40 @@ export const GameScreen = (type: any) => {
     const [loading, setLoading] = useState<boolean>(false)
     const {isOpen, onOpen, onClose} = useDisclosure()
 
-    useEffect(() => {
-        setLoading(true)
-        getPlayersNames().then((users: user[]) => {
-            setPlayerNames(users);
-            return getDealersAndCards();
-        }).then((dealersAndCards: dealerGetRequest[]) => {
-            setDealerAndCards(dealersAndCards);
-            setLoading(false)
-        }).catch(error => {
-            console.error('Error fetching data', error);
-        });
-    }, []);
-
     // useEffect(() => {
-    //    
-    // }, []); //change here instead of playerCalls
+    //     setLoading(true)
+    //     getPlayersNames().then((users: user[]) => {
+    //         setPlayerNames(users);
+    //         return getDealersAndCards();
+    //     }).then((dealersAndCards: dealerGetRequest[]) => {
+    //         setDealerAndCards(dealersAndCards);
+    //         setLoading(false)
+    //     }).catch(error => {
+    //         console.error('Error fetching data', error);
+    //     });
+    // }, []);
+    useEffect(() => {
+        const fetchUsersAndDealers = async () => {
+            const users = await getPlayersNames()
+            const dealersAndCards = await getDealersAndCards();
+            setDealerAndCards(dealersAndCards)
+            setPlayerNames(users)
+            
+        }
+        const fertchCallsAndScores = async () => {
+            const calls = await getPlayersCalls()
+            const tricks = await getPlayersTricks()
+            const scores = await getScores()
+            setPlayerCalls(calls)
+            setPlayerTricks(tricks)
+            setPlayerScores(scores)
+        }
+        setLoading(true)
+        fetchUsersAndDealers().catch(console.error)
+        fertchCallsAndScores().catch(console.error)
+        setLoading(false)
+    }, []);
+    
     const updateUsersAndScores = async () => {
         getPlayersCalls().then((calls: callsGetRequest[]) => {
             setPlayerCalls(calls)
