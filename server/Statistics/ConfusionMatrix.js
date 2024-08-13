@@ -11,8 +11,6 @@ const ConfusionMatrixForPlayer = async (player) => {
     const calls = callsDbo.rows.map(e => e[player] ?? 0)
     const tricks = tricksDbo.rows.map(e => e[player] ?? 0)
     console.log("calls:", calls, "\ntricks:", tricks)
-    // const calls = [1,4,4,3,1,0,2,4]
-    // const tricks = [2,1,4,3,0,1,2,4]
 
     console.log("Constructing confusion matrix...")
     const arr = calls.concat(tricks)

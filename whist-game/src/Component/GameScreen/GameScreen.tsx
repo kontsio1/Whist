@@ -39,44 +39,32 @@ export const GameScreen = (type: any) => {
     const [playerScores, setPlayerScores] = useState<scoresGetRequest[]>()
     const [dealerAndCards, setDealerAndCards] = useState<dealerGetRequest[]>(initialDealerAndCardsState)
     const [maxCallsTricksForCell, setMaxTricksCallsForCell] = useState<maxCallsTricksForCell>({calls: 0, tricks: 0})
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
     const {isOpen, onOpen, onClose} = useDisclosure()
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     getPlayersNames().then((users: user[]) => {
-    //         setPlayerNames(users);
-    //         return getDealersAndCards();
-    //     }).then((dealersAndCards: dealerGetRequest[]) => {
-    //         setDealerAndCards(dealersAndCards);
-    //         setLoading(false)
-    //     }).catch(error => {
-    //         console.error('Error fetching data', error);
-    //     });
-    // }, []);
+    
     useEffect(() => {
         const fetchUsersAndDealers = async () => {
             const users = await getPlayersNames()
             const dealersAndCards = await getDealersAndCards();
             setDealerAndCards(dealersAndCards)
             setPlayerNames(users)
-            
         }
         const fertchCallsAndScores = async () => {
+            setLoading(true)
             const calls = await getPlayersCalls()
             const tricks = await getPlayersTricks()
             const scores = await getScores()
             setPlayerCalls(calls)
             setPlayerTricks(tricks)
             setPlayerScores(scores)
+            setLoading(false)
         }
-        setLoading(true)
         fetchUsersAndDealers().catch(console.error)
         fertchCallsAndScores().catch(console.error)
-        setLoading(false)
     }, []);
-    
+
     const updateUsersAndScores = async () => {
+        // setLoading(true)
         getPlayersCalls().then((calls: callsGetRequest[]) => {
             setPlayerCalls(calls)
         })
@@ -86,7 +74,7 @@ export const GameScreen = (type: any) => {
         getScores().then((scores: scoresGetRequest[]) => {
             setPlayerScores(scores)
         })
-
+        // setLoading(false)
     }
     const getPlayersCalls = async (): Promise<callsGetRequest[]> => {
         try {

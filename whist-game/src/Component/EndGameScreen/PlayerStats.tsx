@@ -15,11 +15,13 @@ export const PlayerStats = () => {
     const bestCall = findMaxValue(stats?.F1Score)
     
     useEffect(() => {
-        setLoading(true)
-        getConfusionMatrix().then((stats)=> {
+        const getStatsAsync = async ()=> {
+            setLoading(true)
+            const stats = await getConfusionMatrix()
             setStats(stats)
             setLoading(false)
-        })
+        }
+        getStatsAsync().catch(console.error)
     }, []);
     
     const getConfusionMatrix = async (): Promise<statsGetRequest> => {
@@ -27,7 +29,7 @@ export const PlayerStats = () => {
             const resp = await axios.get(`/stats/${player}`);
             return resp.data;
         } catch (error) {
-            console.log(error)
+            console.log("error: ", error)
             throw error
         }
     }
