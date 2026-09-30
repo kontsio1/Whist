@@ -1,6 +1,5 @@
-import {statsGetRequest, user} from "../../Constants";
-import axios from "axios";
-import {Avatar, Badge, Box, Button, GridItem, Heading, Spinner, Text} from "@chakra-ui/react";
+import {user} from "../../Constants";
+import {Avatar, Badge, Box, Center, Heading, SimpleGrid, Spinner, Stack, Text} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api";
@@ -32,24 +31,46 @@ export const Stats = () => {
     const HandleBadgeClick = (player: string) => {
         navigate(`/stats/${player}`)
     }
-    return <div>
-        <Heading>Stats</Heading>
-        <Box maxW={900}>
-            <p>Welcome to the -not that nerdy- stats page!</p>
-            <p>Here you can view general information about the game and about individual performances as well as sneaky
-                rivalries and maaaaybe find your biggest weakness... Click on a player to see</p>
-        </Box>
-        {loading ? <Spinner thickness='5px' speed='0.65s' emptyColor='brand.200' color='brand.100' size='xl'/> :
-            players.map((player, index) => {
-                return (
-                    <Box onClick={() => HandleBadgeClick(player)}
-                         style={{display: "inline-block", margin: 10, cursor: "pointer"}} bg={'teal'} p={4}
-                         color={'white'} height={170} maxW={100} borderRadius={20}>
-                        <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index}`}</Badge>
-                        <p>{player}</p>
-                        <Avatar bg='teal.500'/>
-                    </Box>
-                )
-            })}
-    </div>
+    return <Box className={'pageSection'}>
+        <Heading textAlign={'center'}>Stats</Heading>
+        <Stack spacing={3} maxW={'3xl'}>
+            <Text>Welcome to the -not that nerdy- stats page!</Text>
+            <Text>
+                Here you can view general information about the game and about individual performances as well as sneaky
+                rivalries and maybe find your biggest weakness. Tap a player to dig in.
+            </Text>
+        </Stack>
+        {loading ? (
+            <Center py={8}>
+                <Spinner thickness='5px' speed='0.65s' emptyColor='brand.200' color='brand.100' size='xl'/>
+            </Center>
+        ) : (
+            <SimpleGrid minChildWidth={{base: '9rem', md: '10rem'}} spacing={4}>
+                {players.map((player: string, index: number) => {
+                    return (
+                        <Box
+                            key={`${player}-${index}`}
+                            onClick={() => HandleBadgeClick(player)}
+                            cursor={'pointer'}
+                            bg={'teal'}
+                            p={4}
+                            color={'white'}
+                            minH={'170px'}
+                            borderRadius={20}
+                            display={'flex'}
+                            flexDirection={'column'}
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                            gap={3}
+                            className={'statsCard'}
+                        >
+                            <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index + 1}`}</Badge>
+                            <Text textAlign={'center'} fontWeight={'semibold'} noOfLines={2}>{player}</Text>
+                            <Avatar bg='teal.500'/>
+                        </Box>
+                    )
+                })}
+            </SimpleGrid>
+        )}
+    </Box>
 }

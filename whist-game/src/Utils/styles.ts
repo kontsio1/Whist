@@ -5,10 +5,21 @@ const mainButton = defineStyle(()=> {
     return {
         bg: 'brand.100',
         color: 'white',
-        margin: 5,
+        margin: 1,
+        px: 5,
+        py: 6,
+        minH: '44px',
+        borderRadius: 'xl',
+        whiteSpace: 'normal',
+        textAlign: 'center',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         '&:hover': {
-            transform: 'scale(1.2)',
+            transform: 'translateY(-1px)',
+            boxShadow: 'lg',
             bgGradient: 'linear(to-r, brand.300, brand.100)'
+        },
+        _active: {
+            transform: 'scale(0.98)',
         },
         _loading: { opacity: 0.8 },
     }
@@ -17,9 +28,20 @@ const secondaryButton = defineStyle(()=> {
     return {
         bg: 'brand.200',
         color: 'white',
+        px: 5,
+        py: 6,
+        minH: '44px',
+        borderRadius: 'xl',
+        whiteSpace: 'normal',
+        textAlign: 'center',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         '&:hover': {
-            transform: 'scale(1.2)',
+            transform: 'translateY(-1px)',
+            boxShadow: 'lg',
             bgGradient: 'linear(to-r, brand.200, brand.100)'
+        },
+        _active: {
+            transform: 'scale(0.98)',
         },
     }
 })
@@ -27,10 +49,21 @@ const addPlayerButton = defineStyle(()=> {
     return {
         color: 'white',
         background: 'brand.300',
+        px: 5,
+        py: 6,
+        minH: '44px',
+        borderRadius: 'xl',
+        whiteSpace: 'normal',
+        textAlign: 'center',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         '&:hover': {
-            transform: 'scale(1.2)',
+            transform: 'translateY(-1px)',
+            boxShadow: 'lg',
             bgGradient: 'linear(to-r, brand.500, brand.300)'
-            }
+        },
+        _active: {
+            transform: 'scale(0.98)',
+        }
     }
 })
 const playerNameBadge = defineStyle(()=> {
@@ -56,6 +89,14 @@ const badgeTheme = defineStyleConfig({
 
 
 export const theme = extendTheme({
+    styles: {
+        global: {
+            body: {
+                bg: 'gray.50',
+                color: 'gray.800',
+            }
+        }
+    },
     colors: {
         brand: {
             100: "#046865",

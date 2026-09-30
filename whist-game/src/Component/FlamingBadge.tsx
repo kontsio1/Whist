@@ -6,7 +6,7 @@ interface flamingBadgeProps {
     streak: number
 }
 export const FlamingBadge = (props:flamingBadgeProps) => {
-    if (props.streak==6) {
+    if (props.streak === 6) {
         return <div style={{position: "relative", display: "inline-block"}}>
         <Badge variant={'main'} style={{position: "relative", zIndex: 3}} borderRadius={10}
                       padding={1}>Player {props.name}</Badge>

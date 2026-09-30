@@ -7,27 +7,28 @@ interface scoreBubbleProps {
     className?: any,
     highlighted?: boolean,
     zoomed?: boolean,
-    style?: any
+    style?: any,
+    size?: number | string
 }
 
-const style = {
+const bubbleBaseStyle = {
     transition: 'transform 0.2s',
     width:50,
     height:50,
     display: 'flex',
-    // '&:hover': {
-    //     transform: 'scale(1.8)',
-    //     '.hover-target': {
-    //         opacity: 0.1,
-    //     }
-    // }
 };
+
 export const ScoreBubbles = (props: scoreBubbleProps) => {
     const defaultOpacity = 0.7
-    return <Box sx={{...style, '&:hover': {transform: 'scale(1.8)'}}}>
+    const size = props.size ?? 50
+
+    return <Box sx={{...bubbleBaseStyle, width: size, height: size, '&:hover': {transform: 'scale(1.08)'}}}>
     <svg
         className='bubbles'
         xmlSpace="preserve"
+        width="100%"
+        height="100%"
+        viewBox="0 0 650 650"
         {...props}
     >
         <g transform="scale(0.07)">

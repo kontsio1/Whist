@@ -6,8 +6,7 @@ import {
     ModalContent, ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Stack,
-    Text, Toast, useToast
+    Stack
 } from "@chakra-ui/react";
 
 interface modalProps {
@@ -24,8 +23,6 @@ export class PlayerCard {
     }
 }
 export const AddPlayerModal = (props: modalProps) => {
-    const toast = useToast()
-    
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose}>
             <ModalOverlay/>

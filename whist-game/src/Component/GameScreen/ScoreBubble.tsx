@@ -10,7 +10,7 @@ export const ScoreBubble = (props: ScoreBubbleProps) => {
         fontSize: 25,
         transition: 'transform 0.2s',
         '&:hover': {
-            transform: 'scale(1.8)'
+            transform: 'scale(1.05)'
         }
     }
     

@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Whiiist",
+    "slug": "whiiist",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#046865"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.whiiist.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#046865",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.whiiist.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}

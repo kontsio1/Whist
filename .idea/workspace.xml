@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3ffceef-0ee3-49d8-88e0-636a5f28790d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/whist-game/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/AddPlayerModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/AddPlayerModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/AppDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/AppDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/EndGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/EndGame.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/PlayerStats.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/PlayerStats.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/Stats.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/Stats.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/Visuals/Radar/Radar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/EndGameScreen/Visuals/Radar/Radar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/FlamingBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/FlamingBadge.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/CallsAndTricksModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/CallsAndTricksModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/GameScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/GameScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/GameTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/GameTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/ScoreBubble.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/GameScreen/ScoreBubble.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/GameSetup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/GameSetup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Component/Rules.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Component/Rules.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Utils/ScoreBubbles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Utils/ScoreBubbles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/Utils/styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/Utils/styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whist-game/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/whist-game/src/index.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/ktsionis/Desktop/Projects/Whist" value="3I8DTPFKeqjLkOalZ6duF5wQekk" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="89" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/mobile-app/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.542138851287639" />
+      <entry key="MS500" value="3.347795291077391" />
+      <entry key="S2" value="4.469800162499537" />
+      <entry key="S5" value="4.776036818522373" />
+      <entry key="S10" value="4.8944001223267435" />
+      <entry key="S30" value="5.706745023067511" />
+      <entry key="S60" value="7.264289507188378" />
+      <entry key="M2" value="8.988297948664755" />
+      <entry key="M5" value="10.629441920114676" />
+      <entry key="M10" value="12.31089392594546" />
+      <entry key="M15" value="14.67754451606234" />
+      <entry key="M30" value="21.34864094967202" />
+      <entry key="H1" value="28.560102378424876" />
+      <entry key="H2" value="33.93479545460744" />
+      <entry key="H4" value="37.225936059215925" />
+      <entry key="D1" value="40.33454036439239" />
+      <entry key="W1" value="40.904001080534734" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="1.4770285594192504E-173" />
+      <entry key="S10" value="4.376991825298506E-87" />
+      <entry key="S30" value="2.3931421316791416E-29" />
+      <entry key="S60" value="6.83590078916234E-15" />
+      <entry key="M2" value="1.1656928983034406E-7" />
+      <entry key="M5" value="0.0025522956793064345" />
+      <entry key="M10" value="0.07143761960070162" />
+      <entry key="M15" value="0.21691158794030738" />
+      <entry key="M30" value="0.6586435253983949" />
+      <entry key="H1" value="1.147727332788457" />
+      <entry key="H2" value="1.515074498467163" />
+      <entry key="H4" value="1.7407319437743105" />
+      <entry key="D1" value="1.9542508070660884" />
+      <entry key="W1" value="1.9933994061104872" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.452389169685648" />
+      <entry key="MS500" value="3.307387192806566" />
+      <entry key="S2" value="4.455353252986588" />
+      <entry key="S5" value="4.769755884420999" />
+      <entry key="S10" value="4.891139243857484" />
+      <entry key="S30" value="5.704761086160403" />
+      <entry key="S60" value="7.262369381785465" />
+      <entry key="M2" value="8.986818837781176" />
+      <entry key="M5" value="10.631188363232358" />
+      <entry key="M10" value="12.381624310546803" />
+      <entry key="M15" value="14.893608621801674" />
+      <entry key="M30" value="22.006305161487273" />
+      <entry key="H1" value="29.70703605426902" />
+      <entry key="H2" value="35.449359518390395" />
+      <entry key="H4" value="38.9663779730035" />
+      <entry key="D1" value="42.28873735076901" />
+      <entry key="W1" value="42.89739265448032" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3I8DHSCUqlmPwjoYu7IqfnnLSfN" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="file:///snapshot/copilot-language-server-internal/dist/assets/agents/Plan.agent.md" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_id" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="LOCAL" />
+      </template>
+    </option>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ktsionis/Desktop/Projects/Whist&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/ktsionis/Desktop/Projects/Whist/mobile-app/node_modules/typescript/lib&quot;
+  }
+}</component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e3ffceef-0ee3-49d8-88e0-636a5f28790d" name="Changes" comment="" />
+      <created>1787137216607</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1787137216607</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

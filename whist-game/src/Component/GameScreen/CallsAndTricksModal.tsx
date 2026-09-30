@@ -1,11 +1,13 @@
 import {
-    Button, Center, Circle, CircularProgress, DrawerHeader, HStack, Input,
+    Button, Circle, CircularProgress, HStack, Input,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
-    ModalOverlay, Spinner,
+    ModalOverlay,
+    Stack,
+    useBreakpointValue,
     useNumberInput
 } from "@chakra-ui/react";
 import {CSSProperties, useState} from "react";
@@ -30,14 +32,17 @@ enum cellButton {
 
 export const CallsAndTricksModal = (props: tricksModalProps) => {
     const [loading, setLoading] = useState<boolean>(false)
+    const modalSize = useBreakpointValue({base: 'full', md: 'md'})
+    const circleSize = useBreakpointValue({base: '84px', md: '100px'})
+
     const submitValues = (inputStatus: cellButton) => {
         setLoading(true)
-        if (inputStatus == cellButton.calls) {
+        if (inputStatus === cellButton.calls) {
             props.addCall(input.value, props.selectedCell).then(() => {
                 setLoading(false)
                 props.onClose()
             })
-        } else if (inputStatus == cellButton.tricks) {
+        } else if (inputStatus === cellButton.tricks) {
             props.addTrick(input.value, props.selectedCell).then(() => {
                 setLoading(false)
                 props.onClose()
@@ -53,7 +58,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
             step: 1,
             defaultValue: 0,
             min: 0,
-            max: 13,
+            max: Math.max(props.maxTricksAndCalls.calls, props.maxTricksAndCalls.tricks, 13),
             precision: 0,
             allowMouseWheel: true
         })
@@ -69,7 +74,7 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
     }
 
     return (
-        <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
+        <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered size={modalSize} motionPreset={'slideInBottom'}>
             <ModalOverlay/>
             <ModalContent>
                 <ModalHeader className={'borderlessHeader'} style={{display: "inline-block"}}>
@@ -78,27 +83,27 @@ export const CallsAndTricksModal = (props: tricksModalProps) => {
                 <ModalCloseButton/>
                 <ModalBody>
                     <div style={containerStyle}>
-                        <HStack maxW='300px' style={{padding: 30}}>
+                        <HStack maxW='300px' style={{padding: 30, width: '100%', justifyContent: 'center'}}>
                             <Button size={'lg'} {...dec}>-</Button>
                             <Input size={'lg'} style={{textAlign: 'center'}} {...input}/>
                             <Button size={'lg'} {...inc}>+</Button>
                         </HStack>
-                        <HStack>
-                            <Circle size={100} bg='brand.200' color='black' _hover={{bg: "brand.100", color: "white"}}>
+                        <Stack direction={{base: 'column', md: 'row'}} spacing={4} align={'center'}>
+                            <Circle size={circleSize} bg='brand.200' color='black' _hover={{bg: "brand.100", color: "white"}}>
                                 {
                                     loading ? <CircularProgress size={70} isIndeterminate trackColor='inherit' color='rgb(237, 242, 247)'/> :
                                         <Button isLoading={loading} variant='unstyled'
                                                 onClick={() => submitValues(cellButton.tricks)}>Tricks</Button>
                                 }
                             </Circle>
-                            <Circle size={100} bg='brand.400' color='black' _hover={{bg: "brand.300", color: "white"}}>
+                            <Circle size={circleSize} bg='brand.400' color='black' _hover={{bg: "brand.300", color: "white"}}>
                                 {
                                     loading ? <CircularProgress size={70} isIndeterminate trackColor='inherit' color='rgb(237, 242, 247)'/> :
                                         <Button variant='unstyled'
                                                 onClick={() => submitValues(cellButton.calls)}>Calls</Button>
                                 }
                             </Circle>
-                        </HStack>
+                        </Stack>
                     </div>
                 </ModalBody>
             </ModalContent>

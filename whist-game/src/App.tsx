@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {AppRoutes} from "./AppRoutes";
 
 function App() {
   return (
-    <AppRoutes/>
+    <div className="appShell">
+      <AppRoutes/>
+    </div>
   );
 }
 

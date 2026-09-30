@@ -1,15 +1,15 @@
-import {Button} from "@chakra-ui/react";
+import {Box, Button, Text} from "@chakra-ui/react";
 import {Link} from "react-router-dom";
 
 export const EndGame =()=>{
     return (
-        <div>
+        <Box className={'pageSection'} textAlign={'center'}>
             <header>Winner:</header>
-            <p>you for sure</p>
+            <Text fontSize={{base: 'lg', md: 'xl'}}>you for sure</Text>
             <div className={"endGameButtonsContainers"}>
-            <Link to={'/setup'}><Button variant={'custom'}>Play Again!</Button></Link>
-            <Link to={'/stats'}><Button variant={'main'}>Tryhard stuff</Button></Link>
+                <Link to={'/setup'}><Button variant={'custom'} w={{base: '100%', md: 'auto'}}>Play Again!</Button></Link>
+                <Link to={'/stats'}><Button variant={'main'} w={{base: '100%', md: 'auto'}}>Tryhard stuff</Button></Link>
             </div>
-        </div>
+        </Box>
     )
 }

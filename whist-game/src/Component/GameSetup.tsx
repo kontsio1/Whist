@@ -1,13 +1,12 @@
 import {
     Avatar,
     Badge,
-    Box, Button, Center, Grid, GridItem,
-    Heading, IconButton,
+    Box, Button, Flex, SimpleGrid, Stack, Text,
     useDisclosure, useToast
 } from "@chakra-ui/react";
-import {ArrowBackIcon, ArrowForwardIcon, PlusSquareIcon} from "@chakra-ui/icons";
+import {ArrowForwardIcon, PlusSquareIcon} from "@chakra-ui/icons";
 import {AddPlayerModal, PlayerCard} from "./AddPlayerModal";
-import React, {MouseEventHandler, useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {user} from "../Constants";
 import api from "../api";
@@ -48,7 +47,7 @@ export const GameSetup = () => {
             isClosable: true,
         })
         setDisabled(true)
-        setPlayerBoxes((currBoxesArr)=> {
+        setPlayerBoxes((currBoxesArr: PlayerCard[])=> {
             const newBoxesArr = [...currBoxesArr]
             if (newPlayer){
                 newBoxesArr.push(newPlayer)
@@ -64,36 +63,49 @@ export const GameSetup = () => {
     const handleStartGame = () => {
         setLoading(true)
         const usersRequest = convertStateToRequestBody(playerBoxes)
-        api.post("/users", usersRequest).then((response)=>{
+        api.post("/users", usersRequest).then(()=>{
             setLoading(false)
             navigate('/game')
         })
     }
 
     return (
-        <div>
+        <Box className={'pageSection'}>
             <header>New Game Setup</header>
-            <Grid templateColumns='repeat(5, 1fr)' gap={5}>
+            <Text className={'helperText'}>
+                Add players first, then start or resume a game. The layout wraps automatically for smaller screens.
+            </Text>
+            <SimpleGrid minChildWidth={{base: '9rem', md: '10rem'}} spacing={4}>
                 {
-                    playerBoxes.map((playerInfo, index)=>{
+                    playerBoxes.map((playerInfo: PlayerCard, index: number)=>{
                         return (
-                            <GridItem>
-                                <Box className={"playerBox"}>
-                                    <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index}`}</Badge>
-                                    <p>{playerInfo.username}</p>
+                            <Box key={`${playerInfo.username}-${index}`} className={"playerBox"}>
+                                <Badge borderRadius='full' px='2' colorScheme='teal'>{`Player ${index + 1}`}</Badge>
+                                <Text fontWeight={'semibold'} noOfLines={2}>{playerInfo.username}</Text>
+                                <Flex justify={'center'}>
                                     <Avatar bg='teal.500' />
-                                </Box>
-                            </GridItem>
+                                </Flex>
+                            </Box>
                             )
                     })
                 }
-                <GridItem style={{margin:"auto"}}>
-                    <Button variant="custom" className={"bigCustomButton"} leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>Add player</Button>
-                </GridItem>
-            </Grid>
+                <Flex align={'stretch'}>
+                    <Button variant="custom" className={"bigCustomButton"} leftIcon={<PlusSquareIcon/>} onClick={onAddClick}>
+                        Add player
+                    </Button>
+                </Flex>
+            </SimpleGrid>
             <AddPlayerModal isOpen={isOpen} onClose={onCloseModal} addPlayer={addPlayer} handleChange={handleChange} disabled={disabled}/>
-            <Button variant={'main'} onClick={handleStartGame} isLoading={loading}>Start</Button>
-            <Link to={'/game'}><Button variant={'main'} aria-label='go back' rightIcon={<ArrowForwardIcon/>}>Resume game</Button></Link>
-        </div>
+            <Stack direction={{base: 'column', md: 'row'}} spacing={3}>
+                <Button variant={'main'} onClick={handleStartGame} isLoading={loading} isDisabled={playerBoxes.length === 0}>
+                    Start
+                </Button>
+                <Link to={'/game'}>
+                    <Button variant={'main'} aria-label='resume game' rightIcon={<ArrowForwardIcon/>} w={{base: '100%', md: 'auto'}}>
+                        Resume game
+                    </Button>
+                </Link>
+            </Stack>
+        </Box>
     )
 }

@@ -1,4 +1,4 @@
-import {Button, IconButton, Skeleton, TableContainer, useDisclosure, useToast} from "@chakra-ui/react";
+import {Box, Button, IconButton, Text, useDisclosure, useToast} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {
     callsGetRequest,
@@ -25,7 +25,7 @@ export interface maxCallsTricksForCell {
     tricks: number
 }
 
-export const GameScreen = (type: any) => {
+export const GameScreen = () => {
     const initialDealerAndCardsState: dealerGetRequest[] = [{
         roundno: 0,
         cards: 1,
@@ -124,17 +124,18 @@ export const GameScreen = (type: any) => {
     const addCall = async (value: number, cell: cellCoords | undefined) => {
         if (cell) {
             const newCall: callsPostRequest = {roundNo: cell.roundNo, [cell.player]: value}
-            const dealerRound = dealerAndCards.find(d => d.roundno === cell.roundNo)
-            let callsRound = playerCalls?.find(c => c.roundno == cell.roundNo)
+            const dealerRound = dealerAndCards.find((d: dealerGetRequest) => d.roundno === cell.roundNo)
+            let callsRound = playerCalls?.find((c: callsGetRequest) => c.roundno === cell.roundNo)
             if (callsRound) {
                 callsRound = removeKeyFromObject(callsRound, cell.player as keyof callsGetRequest)
-                const total = Object.values(callsRound).reduce((acc, val) => {
+                const roundValues = Object.values(callsRound) as Array<number | null | undefined>
+                const total = roundValues.reduce((acc: number, val) => {
                     if (val == null) {
                         return -100
                     }
-                    return acc + val
+                    return typeof val === 'number' ? acc + val : acc
                 }, -callsRound.roundno);
-                if (total + value == dealerRound?.cards) {
+                if (total + value === dealerRound?.cards) {
                     return toast({
                         title: 'Call sum matches total tricks',
                         description: `Sorry can't make that call`,
@@ -174,8 +175,8 @@ export const GameScreen = (type: any) => {
     }
     const onClickCell = (cell: cellCoords) => {
         setSelectedCell(cell)
-        if (dealerAndCards.length != 0) {
-            const dealerRow = dealerAndCards.find((d) => d.roundno == cell.roundNo)
+        if (dealerAndCards.length !== 0) {
+            const dealerRow = dealerAndCards.find((d: dealerGetRequest) => d.roundno === cell.roundNo)
             setMaxTricksCallsForCell({calls: dealerRow?.cards ?? 10, tricks: dealerRow?.cards ?? 10})
         }
         onOpen()
@@ -197,28 +198,34 @@ export const GameScreen = (type: any) => {
     }
 
     return (
-        <>
+        <Box className={'pageSection'}>
             <header>Game screen</header>
             <div className={"tableContainer"}>
-                <Link to={'/setup'}><IconButton variant={'main'} aria-label='go back'
-                                                icon={<ArrowBackIcon/>}>Back</IconButton></Link>
+                <div className={'gameActionBar'}>
+                    <Link to={'/setup'}><IconButton variant={'main'} aria-label='go back'
+                                                    icon={<ArrowBackIcon/>}>Back</IconButton></Link>
+                    <Link to={'/endGame'}><Button variant={'main'}>End Game</Button></Link>
+                </div>
+                <Text className={'helperText'}>On smaller screens, swipe horizontally to browse the score table.</Text>
                 <SkeletonLoader isLoaded={!loading}>
-                    <GameTable
-                        addDealer={addDealer}
-                        playerNames={playerNames}
-                        playerCalls={playerCalls}
-                        playerTricks={playerTricks}
-                        playerScores={playerScores}
-                        dealersAndCards={dealerAndCards}
-                        selectedCell={selectedCell}
-                        onClickCell={onClickCell}
-                    /></SkeletonLoader>
+                    <Box className={'tableScroll'}>
+                        <GameTable
+                            addDealer={addDealer}
+                            playerNames={playerNames}
+                            playerCalls={playerCalls}
+                            playerTricks={playerTricks}
+                            playerScores={playerScores}
+                            dealersAndCards={dealerAndCards}
+                            selectedCell={selectedCell}
+                            onClickCell={onClickCell}
+                        />
+                    </Box>
+                </SkeletonLoader>
                 <CallsAndTricksModal isOpen={isOpen} onClose={onClose} addCall={addCall}
                                      addTrick={addTrick} selectedCell={selectedCell}
                                      setSelectedCell={setSelectedCell}
-                                     maxTricksAndCalls={maxCallsTricksForCell}/><Link
-                to={'/endGame'}><Button variant={'main'}>End Game</Button></Link>
+                                     maxTricksAndCalls={maxCallsTricksForCell}/>
             </div>
-        </>
+        </Box>
     )
 }

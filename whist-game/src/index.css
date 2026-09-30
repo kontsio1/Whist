@@ -5,6 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 320px;
+  overflow-x: hidden;
+  background: #f7fafc;
+  color: #1a202c;
+}
+
+html,
+#root {
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 code {

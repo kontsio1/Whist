@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import {AxisConfig, INNER_RADIUS, RadarGrid} from './RadarGrid';
-import {HStack, VStack} from "@chakra-ui/react";
+import {HStack} from "@chakra-ui/react";
 
 export type Variable = "accuracy" | "precision" | "recall"
 
@@ -30,7 +30,6 @@ type RadarProps = {
 };
 export const Radar = ({width, height, data, axisConfig, legend}: RadarProps) => {
     const outerRadius = Math.min(width, height) / 2 - MARGIN;
-        console.log(data)
     
     if(!data) {
         return <div></div>
@@ -76,7 +75,7 @@ export const Radar = ({width, height, data, axisConfig, legend}: RadarProps) => 
         allCoordinates.push(allCoordinates[0]);
         const d = lineGenerator(allCoordinates);
         if (!d) {
-            return;
+            return null;
         }
         return (
             <path
